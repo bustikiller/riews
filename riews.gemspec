@@ -9,14 +9,14 @@ Gem::Specification.new do |s|
   s.version     = Riews::VERSION
   s.authors     = ["Manuel Bustillo"]
   s.email       = ["mayn13@gmail.com"]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of Riews."
-  s.description = "TODO: Description of Riews."
+  s.homepage    = "https://github.com/bustikiller/riews"
+  s.summary     = "A Drupal-like customizable views engine"
+  s.description = "A Drupal-like customizable views engine"
   s.license     = "MIT"
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
 
-  s.add_dependency "rails", "~> 5.1.2"
+  s.add_dependency "rails", ">= 3.0.0"
 
   s.add_development_dependency "sqlite3"
 end
