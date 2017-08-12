@@ -3,7 +3,7 @@ module Riews
     has_many :columns, foreign_key: 'riews_view_id', dependent: :delete_all
     has_many :filter_criterias, foreign_key: 'riews_view_id', dependent: :delete_all
 
-    accepts_nested_attributes_for :columns
+    accepts_nested_attributes_for :columns, :filter_criterias
 
     validates :model, presence: true
     validate :model_is_activerecord_class

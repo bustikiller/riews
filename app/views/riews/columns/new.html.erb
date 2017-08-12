@@ -1,5 +1,7 @@
-<h1>New Column</h1>
+<%= panel_with_body title: 'New Column' do %>
 
-<%= render 'form', column: @column %>
+    <%= render 'form', column: @column %>
+    <%= link_to 'Back', view_columns_path(@column.view) %>
 
-<%= link_to 'Back', view_columns_path(@column.view) %>
+<% end %>
+

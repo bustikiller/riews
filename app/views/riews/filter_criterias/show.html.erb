@@ -1,0 +1,12 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Method:</strong>
+  <%= @filter_criteria.field_name %>
+  <%= Riews::FilterCriteria.operators[@filter_criteria.operator] %>
+</p>
+
+
+
+<%= link_to 'Edit', edit_view_filter_path(@filter_criteria.view, @filter_criteria) %> |
+<%= link_to 'Back', view_filters_path(@filter_criteria.view) %>

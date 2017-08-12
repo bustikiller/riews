@@ -1,0 +1,6 @@
+<% url = filter_criteria.persisted? ? view_filter_path(filter_criteria.view, filter_criteria) : view_filters_path(filter_criteria.view) %>
+<%= simple_form_for([filter_criteria.view, filter_criteria], url: url) do |f| %>
+    <%= f.input :field_name, as: :select, collection: filter_criteria.available_filter_criterias %>
+    <%= f.input :operator, as: :select, collection: operators_for_select, value_method: :first, label_method: :last %>
+    <%= f.submit %>
+<% end %>
