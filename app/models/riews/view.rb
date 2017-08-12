@@ -1,6 +1,6 @@
 module Riews
   class View < ApplicationRecord
-    has_many :columns, foreign_key: 'riews_view_id'
+    has_many :columns, foreign_key: 'riews_view_id', dependent: :delete_all
     accepts_nested_attributes_for :columns
 
     validates :model, presence: true
