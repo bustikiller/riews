@@ -7,7 +7,7 @@ module Riews
 
     # GET /columns
     def index
-      @columns = Column.all
+      @columns = @view.columns
     end
 
     # GET /columns/1
