@@ -1,3 +1,5 @@
 Riews::Engine.routes.draw do
-  resources :views
+  resources :views do
+    resources :columns
+  end
 end

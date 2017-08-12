@@ -1,0 +1,11 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Method:</strong>
+  <%= @column.method %>
+</p>
+
+
+
+<%= link_to 'Edit', edit_view_column_path(@column.view, @column) %> |
+<%= link_to 'Back', view_columns_path(@column.view) %>

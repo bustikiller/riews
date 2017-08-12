@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Columns</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Index</th>
+      <th>Method</th>
+      <th colspan="3">Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @columns.each do |column| %>
+      <tr>
+        <td><%= column.id %></td>
+        <td><%= column.method %></td>
+        <td><%= link_to 'Show', view_column_path(column.view, column) %></td>
+        <td><%= link_to 'Edit', edit_view_column_path(column.view, column) %></td>
+        <td><%= link_to 'Destroy', view_column_path(column.view, column), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Column', new_view_column_path(@view) %> |
+<%= link_to 'View', view_path(@view) %>

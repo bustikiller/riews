@@ -1,0 +1,4 @@
+<%= simple_form_for([column.view, column]) do |f| %>
+    <%= f.select :method, column.available_columns %>
+    <%= f.submit %>
+<% end %>

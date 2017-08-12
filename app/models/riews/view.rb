@@ -1,8 +1,9 @@
 module Riews
   class View < ApplicationRecord
-    def columns
-      model.constantize.attribute_names
-    end
+    has_many :columns, foreign_key: 'riews_view_id'
+    accepts_nested_attributes_for :columns
+
+    validates :model, inclusion: { in: ActiveRecord::Base.descendants.map(&:name) }
 
     def results
       model.constantize.all

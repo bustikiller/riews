@@ -10,7 +10,7 @@ module Riews
     def generate_header_for(view)
       content_tag :thead do
         content_tag :tr do
-          view.columns.map {|column| content_tag :td, column}.inject(:+)
+          view.columns.map {|column| content_tag :td, column.method}.inject(:+)
         end
       end
     end
@@ -19,8 +19,8 @@ module Riews
       content_tag :tbody do
         view.results.map do |object|
           content_tag :tr do
-            view.columns.map do |column_name|
-              content_tag :td, object[column_name]
+            view.columns.map do |column|
+              content_tag :td, object[column.method]
             end.inject(:+)
           end
         end.inject(:+)
