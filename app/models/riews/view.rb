@@ -8,8 +8,8 @@ module Riews
     validates :code, presence: true, uniqueness: true
     validates :name, presence: true
 
-    def results
-      model.constantize.all
+    def results(page, per_page)
+      model.constantize.all.page(page).per(per_page)
     end
 
     def self.available_models

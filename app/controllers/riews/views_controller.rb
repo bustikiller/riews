@@ -11,6 +11,7 @@ module Riews
 
     # GET /views/1
     def show
+      @page = params[:page]
     end
 
     # GET /views/new
