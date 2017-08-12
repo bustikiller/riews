@@ -21,6 +21,11 @@ Or install it yourself as:
 $ gem install riews
 ```
 
+Make sure your application is eager loading the code in the desired environments:
+```ruby
+  config.eager_load = true
+```
+
 ## Contributing
 Contribution directions go here.
 
