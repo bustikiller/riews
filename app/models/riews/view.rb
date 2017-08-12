@@ -7,9 +7,12 @@ module Riews
     validate :model_is_activerecord_class
     validates :code, presence: true, uniqueness: true
     validates :name, presence: true
+    validates :paginator_size, :numericality => { :greater_than_or_equal_to => 0 }
 
     def results(page, per_page)
-      model.constantize.all.page(page).per(per_page)
+      query = model.constantize.all.page(page)
+      query = query.per(per_page) if per_page > 0
+      query
     end
 
     def self.available_models

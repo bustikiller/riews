@@ -57,7 +57,7 @@ module Riews
 
       # Only allow a trusted parameter "white list" through.
       def view_params
-        params.require(:view).permit(:name, :model, :code)
+        params.require(:view).permit(:name, :model, :code, :paginator_size)
       end
   end
 end

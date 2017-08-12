@@ -2,5 +2,6 @@
     <%= f.input :name %>
     <%= f.input :model, as: :select, collection: Riews::View.available_models %>
     <%= f.input :code %>
+    <%= f.input :paginator_size %>
     <%= f.submit %>
 <% end %>
