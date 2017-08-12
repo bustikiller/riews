@@ -17,7 +17,7 @@ module Riews
     private
 
     def get_affected_models(view, page)
-      view.results(page, view.paginator_size)
+      view.results(page, view.paginator_size).select(view.columns.map(&:method))
     end
   end
 end
