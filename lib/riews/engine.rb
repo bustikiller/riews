@@ -3,5 +3,6 @@ module Riews
     isolate_namespace Riews
 
     require 'kaminari'
+    require 'cocoon'
   end
 end

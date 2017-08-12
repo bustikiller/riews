@@ -17,13 +17,14 @@ module Riews
     end
 
     def edit
+      @filter_criteria.arguments.build
     end
 
     def create
       @filter_criteria = @view.filter_criterias.new(filter_criteria_params)
 
       if @filter_criteria.save
-        redirect_to view_filters_url(@filter_criteria.view, @filter_criteria), notice: 'Filter was successfully created.'
+        redirect_to view_filters_url(@filter_criteria.view), notice: 'Filter was successfully created.'
       else
         render :new
       end
@@ -31,7 +32,7 @@ module Riews
 
     def update
       if @filter_criteria.update(filter_criteria_params)
-        redirect_to view_filter_url(@filter_criteria.view, @filter_criteria), notice: 'Filter was successfully updated.'
+        redirect_to view_filters_url(@filter_criteria.view), notice: 'Filter was successfully updated.'
       else
         render :edit
       end
@@ -48,7 +49,7 @@ module Riews
     end
 
     def filter_criteria_params
-      params.require(:filter_criteria).permit(:field_name, :operator)
+      params.require(:filter_criteria).permit(:field_name, :operator, arguments_attributes: [:value, :id, :_destroy])
     end
   end
 end

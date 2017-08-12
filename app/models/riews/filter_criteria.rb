@@ -5,11 +5,15 @@ module Riews
     def self.operators
       {
           1 => 'NULL',
-          2 => 'NOT NULL'
+          2 => 'NOT NULL',
+          3 => '='
       }
     end
 
     belongs_to :riews_view, class_name: 'Riews::View'
+    has_many :arguments, foreign_key: 'riews_filter_criteria_id', dependent: :delete_all, inverse_of: :riews_filter_criteria
+    accepts_nested_attributes_for :arguments, reject_if: :all_blank, allow_destroy: true
+
     alias_method :view, :riews_view
 
     validates :operator, inclusion: { in: operators.keys }
