@@ -14,7 +14,7 @@ module Riews
     def results(page, per_page)
       query = model.constantize.all.page(page)
       query = query.per(per_page) if per_page > 0
-      query
+      filter_results query
     end
 
     def self.available_models
@@ -25,6 +25,12 @@ module Riews
       if model.present?
         errors.add(:model, 'Invalid model!') unless model.constantize.ancestors.include? ActiveRecord::Base
       end
+    end
+
+    private
+
+    def filter_results(original_query)
+      filter_criterias.inject(original_query){|composed_query, filter| filter.apply_to composed_query }
     end
   end
 end

@@ -19,5 +19,15 @@ module Riews
       (view.model.constantize).attribute_names
     end
 
+    def apply_to(query)
+      case operator
+        when 1
+          query.where(field_name => nil)
+        when 2
+          query.where.not(field_name => nil)
+        else
+          query
+      end
+    end
   end
 end
