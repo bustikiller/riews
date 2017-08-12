@@ -2,29 +2,21 @@
 
 <h1>Views</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Model</th>
-      <th>Code</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+<%= bootstrap_table do |table|
+  table.headers << 'Name'
+  table.headers << 'Model'
+  table.headers << 'Code'
+  table.headers << 'Edit'
 
-  <tbody>
-    <% @views.each do |view| %>
-      <tr>
-        <td><%= view.name %></td>
-        <td><%= view.model %></td>
-        <td><%= view.code %></td>
-        <td><%= link_to 'Show', view %></td>
-        <td><%= link_to 'Edit', edit_view_path(view) %></td>
-        <td><%= link_to 'Destroy', view, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+  @views.each do |view|
+    table.rows << [
+        view.name,
+        view.model,
+        view.code,
+        link_to('Edit view', edit_view_path(view))
+    ]
+  end
+end %>
 
 <br>
 
