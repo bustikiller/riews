@@ -1,20 +1,21 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Columns</h1>
 
-<%= bootstrap_table do |table|
-  table.headers << 'Method'
-  table.headers << 'Show'
-  table.headers << 'Edit'
-  table.headers << 'Destroy'
+<%= panel_with_body title: 'Columns' do
+  bootstrap_table do |table|
+    table.headers << 'Method'
+    table.headers << 'Show'
+    table.headers << 'Edit'
+    table.headers << 'Destroy'
 
-  @columns.each do |column|
-    table.rows << [
-        column.method,
-        link_to('Show column', view_column_path(column.view, column)),
-        link_to('Edit column', edit_view_column_path(column.view, column)),
-        link_to('Destroy column', view_column_path(column.view, column), method: :delete, data: { confirm: 'Are you sure?' })
-    ]
+    @columns.each do |column|
+      table.rows << [
+          column.method,
+          link_to('Show column', view_column_path(column.view, column)),
+          link_to('Edit column', edit_view_column_path(column.view, column)),
+          link_to('Destroy column', view_column_path(column.view, column), method: :delete, data: { confirm: 'Are you sure?' })
+      ]
+    end
   end
 end %>
 

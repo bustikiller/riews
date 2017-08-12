@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/bustikiller/btgen
-  revision: c0152f33c5e33d7e397f926ff72b0f46f73cabd4
+  revision: 6e7b7afd9a10696393fcced27f4ce10554e5c1b3
   specs:
     btgen (0.1.0)
       rails (>= 3.0.0)

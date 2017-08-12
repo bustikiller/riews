@@ -1,1 +1,3 @@
-<%= generate_view_content_for(@view) %>
+<%= panel_with_body title: @view.name do
+  generate_view_content_for(@view)
+end %>
