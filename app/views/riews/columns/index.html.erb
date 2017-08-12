@@ -2,27 +2,21 @@
 
 <h1>Columns</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Index</th>
-      <th>Method</th>
-      <th colspan="3">Actions</th>
-    </tr>
-  </thead>
+<%= bootstrap_table do |table|
+  table.headers << 'Method'
+  table.headers << 'Show'
+  table.headers << 'Edit'
+  table.headers << 'Destroy'
 
-  <tbody>
-    <% @columns.each do |column| %>
-      <tr>
-        <td><%= column.id %></td>
-        <td><%= column.method %></td>
-        <td><%= link_to 'Show', view_column_path(column.view, column) %></td>
-        <td><%= link_to 'Edit', edit_view_column_path(column.view, column) %></td>
-        <td><%= link_to 'Destroy', view_column_path(column.view, column), method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+  @columns.each do |column|
+    table.rows << [
+        column.method,
+        link_to('Show column', view_column_path(column.view, column)),
+        link_to('Edit column', edit_view_column_path(column.view, column)),
+        link_to('Destroy column', view_column_path(column.view, column), method: :delete, data: { confirm: 'Are you sure?' })
+    ]
+  end
+end %>
 
 <br>
 
