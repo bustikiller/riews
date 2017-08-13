@@ -6,11 +6,12 @@ module Riews
 
     accepts_nested_attributes_for :columns, :filter_criterias, :relationships
 
-    validates :model, presence: true
     validate :model_is_activerecord_class
     validates :code, presence: true, uniqueness: true
     validates :name, presence: true
     validates :paginator_size, :numericality => { :greater_than_or_equal_to => 0 }
+
+    before_create :set_default_values
 
     def results(page, per_page)
       query = klass.all
@@ -25,6 +26,7 @@ module Riews
     end
 
     def available_reflections
+      return [] unless model
       klass.reflections.keys
     end
     
@@ -59,6 +61,10 @@ module Riews
 
     def join_relationships(original_query)
       original_query.joins relationships.pluck(:name).map(&:to_sym)
+    end
+
+    def set_default_values
+      self.name = self.code
     end
   end
 end

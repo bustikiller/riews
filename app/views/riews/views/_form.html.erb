@@ -4,7 +4,7 @@
     <%= f.input :code %>
     <%= f.input :paginator_size %>
 
-    <% if view.persisted? %>
+    <% if view.persisted? && view.model %>
         <%= content_tag :h3, 'Relationships' %>
         <%= f.fields_for :relationships do |ff| %>
             <%= render 'relationship_fields', f: ff %>
