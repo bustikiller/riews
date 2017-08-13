@@ -14,9 +14,7 @@ module Riews
     def generate_helper_buttons_for(view)
       [
           link_to('Edit', riews.edit_view_path(view)),
-          link_to('Back', riews.views_path),
-          link_to('Columns', riews.view_columns_path(view)),
-          link_to('Filters', riews.view_filters_path(view))
+          link_to('All views', riews.views_path),
       ].inject{|sum, link| sum +' | ' + link }
     end
 

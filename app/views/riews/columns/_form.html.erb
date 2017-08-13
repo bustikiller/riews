@@ -1,6 +1,0 @@
-<%= simple_form_for([column.view, column]) do |f| %>
-    <%= f.input :method, as: :select, collection: column.available_columns %>
-    <%= f.input :prefix %>
-    <%= f.input :postfix %>
-    <%= f.submit %>
-<% end %>
