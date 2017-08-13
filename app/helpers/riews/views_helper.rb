@@ -8,7 +8,7 @@ module Riews
     end
 
     def generate_view_paginator_for(view, page=1)
-      paginate get_affected_models(view, page) if view.columns.any?
+      paginate get_affected_models(view, page) if view.columns.any? && view.paginator_size > 0
     end
 
     def generate_helper_buttons_for(view)
