@@ -6,7 +6,7 @@ module Riews
 
     # GET /views
     def index
-      @views = View.all
+      @views = View.all.includes(:relationships)
     end
 
     # GET /views/1
