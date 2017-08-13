@@ -6,7 +6,8 @@ module Riews
       {
           1 => 'NULL',
           2 => 'NOT NULL',
-          3 => '='
+          3 => '=',
+          4 => 'IN'
       }
     end
 
@@ -29,6 +30,8 @@ module Riews
           query.where(field_name => nil)
         when 2
           query.where.not(field_name => nil)
+        when 3, 4
+          query.where(field_name => arguments.pluck(:value))
         else
           query
       end
