@@ -2,7 +2,7 @@ module Riews
   module ViewsHelper
     def generate_view_content_for(view, page=1)
       bootstrap_table do |table|
-        table.headers = view.columns.map(&:method)
+        table.headers = view.columns.map(&:db_column)
         table.rows = render_view_rows(page, view)
       end
     end
