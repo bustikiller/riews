@@ -1,5 +1,4 @@
-<h1>New View</h1>
-
-<%= render 'form', view: @view %>
-
-<%= link_to 'Back', views_path %>
+<%= panel_with_body title: 'New view' do %>
+    <%= render 'form', view: @view %>
+    <%= link_to 'Back', views_path %>
+<% end %>
