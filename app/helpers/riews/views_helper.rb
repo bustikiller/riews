@@ -34,6 +34,10 @@ module Riews
       end
     end
 
+    def available_columns_for_select(view)
+      view.available_columns.group_by{|c| c.split('.').size > 1 ? c.split('.').first : view.klass.table_name}
+    end
+
     private
 
     def get_affected_models(view, page)
