@@ -15,8 +15,10 @@ module Riews
 
     def results(page, per_page)
       query = klass.all
-      query = query.page(page)
-      query = query.per(per_page) if per_page > 0
+      if per_page > 0
+        query = query.page(page)
+        query = query.per(per_page)
+      end
       query = join_relationships query
       query = filter_results query
       query = group_query query
