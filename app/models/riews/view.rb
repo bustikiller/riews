@@ -1,10 +1,10 @@
 module Riews
   class View < ApplicationRecord
-    has_many :columns, foreign_key: 'riews_view_id', dependent: :delete_all
-    has_many :filter_criterias, foreign_key: 'riews_view_id', dependent: :delete_all
-    has_many :relationships, foreign_key: 'riews_view_id', dependent: :delete_all
+    has_many :columns, foreign_key: 'riews_view_id', dependent: :destroy
+    has_many :filter_criterias, foreign_key: 'riews_view_id', dependent: :destroy
+    has_many :relationships, foreign_key: 'riews_view_id', dependent: :destroy
 
-    accepts_nested_attributes_for :columns, :filter_criterias, :relationships
+    accepts_nested_attributes_for :columns, :filter_criterias, :relationships, reject_if: :all_blank, allow_destroy: true
 
     validate :model_is_activerecord_class
     validates :code, presence: true, uniqueness: true
