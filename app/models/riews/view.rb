@@ -23,6 +23,10 @@ module Riews
     def self.available_models
       ActiveRecord::Base.descendants.map(&:name)
     end
+
+    def available_reflections
+      klass.reflections.keys
+    end
     
     def available_columns
       in_table_columns = klass.attribute_names
