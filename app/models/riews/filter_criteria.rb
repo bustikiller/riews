@@ -8,7 +8,8 @@ module Riews
           2 => 'NOT NULL',
           3 => '=',
           4 => 'IN',
-          5 => 'LIKE'
+          5 => 'LIKE',
+          6 => 'BETWEEN'
       }
     end
 
@@ -35,6 +36,8 @@ module Riews
           query.where(field_name => arguments.pluck(:value))
         when 5
           query.where("#{field_name} LIKE ?", "#{arguments.first.value}") if arguments.any?
+        when 6
+          query.where(field_name => (arguments.first.value..arguments.last.value)) if arguments.count == 2
         else
           query
       end
