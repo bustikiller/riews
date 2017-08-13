@@ -23,13 +23,10 @@ module Riews
     accepts_nested_attributes_for :arguments, reject_if: :all_blank, allow_destroy: true
 
     alias_method :view, :riews_view
+    delegate :available_columns, to: :view
 
     validates :operator, inclusion: { in: operators.keys }
     validates_presence_of :view, :field_name, :operator
-
-    def available_filter_criterias
-      (view.model.constantize).attribute_names
-    end
 
     def apply_to(query)
       query_modifier = case operator

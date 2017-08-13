@@ -23,6 +23,19 @@ module Riews
     def self.available_models
       ActiveRecord::Base.descendants.map(&:name)
     end
+    
+    def available_columns
+      in_table_columns = klass.attribute_names
+
+      in_relationships_columns = klass.reflections
+                                     .select{|k, _| relationships.pluck(:name).include? k}
+                                     .values
+                                     .map(&:klass)
+                                     .map{|klass| klass.attribute_names
+                                                      .map{|attribute| [klass.table_name, attribute].join('.')}}.flatten
+
+      in_table_columns + in_relationships_columns
+    end
 
     def model_is_activerecord_class
       if model.present?
