@@ -9,7 +9,11 @@ module Riews
           3 => '=',
           4 => 'IN',
           5 => 'LIKE',
-          6 => 'BETWEEN'
+          6 => 'BETWEEN',
+          7 => '>',
+          8 => '>=',
+          9 => '<',
+          10 => '<='
       }
     end
 
@@ -38,6 +42,14 @@ module Riews
           query.where("#{field_name} LIKE ?", "#{arguments.first.value}") if arguments.any?
         when 6
           query.where(field_name => (arguments.first.value..arguments.last.value)) if arguments.count == 2
+        when 7
+          query.where("#{field_name} > ?", "#{arguments.first.value}") if arguments.count == 1
+        when 8
+          query.where("#{field_name} >= ?", "#{arguments.first.value}") if arguments.count == 1
+        when 9
+          query.where("#{field_name} < ?", "#{arguments.first.value}") if arguments.count == 1
+        when 10
+          query.where("#{field_name} <= ?", "#{arguments.first.value}") if arguments.count == 1
         else
           query
       end
