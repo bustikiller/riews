@@ -21,7 +21,6 @@ module Riews
 
     # GET /views/1/edit
     def edit
-      @view.relationships.build
     end
 
     # POST /views
@@ -51,15 +50,18 @@ module Riews
     end
 
     private
-      # Use callbacks to share common setup or constraints between actions.
-      def set_view
-        @view = View.find(params[:id])
-      end
+    # Use callbacks to share common setup or constraints between actions.
+    def set_view
+      @view = View.find(params[:id])
+    end
 
-      # Only allow a trusted parameter "white list" through.
-      def view_params
-        params.require(:view).permit(:name, :model, :code, :paginator_size,
-                                     relationships_attributes: [:id, :_destroy, :name])
-      end
+    # Only allow a trusted parameter "white list" through.
+    def view_params
+      params.require(:view).permit(:name, :model, :code, :paginator_size,
+                                   columns_attributes: [:id, :_destroy, :method, :prefix, :postfix],
+                                   relationships_attributes: [:id, :_destroy, :name],
+                                   filter_criterias_attributes: [:field_name, :operator, :negation, :id, :_destroy,
+                                                                 arguments_attributes: [:value, :id, :_destroy]])
+    end
   end
 end

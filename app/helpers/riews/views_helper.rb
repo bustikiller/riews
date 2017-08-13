@@ -1,13 +1,9 @@
 module Riews
   module ViewsHelper
     def generate_view_content_for(view, page=1)
-      if view.columns.any?
-        bootstrap_table do |table|
-          table.headers = view.columns.map(&:method)
-          table.rows = render_view_rows(page, view)
-        end
-      else
-        render partial: 'riews/views/empty_view', locals: {view: view}
+      bootstrap_table do |table|
+        table.headers = view.columns.map(&:method)
+        table.rows = render_view_rows(page, view)
       end
     end
 
@@ -25,12 +21,19 @@ module Riews
     end
 
     def riews_table_with_code(code)
-      view = View.find_or_create_by code: code
-      [
-          generate_view_content_for(view),
-          generate_view_paginator_for(view),
-          generate_helper_buttons_for(view)
-      ].compact.inject(:+)
+      riews_table(View.find_or_create_by code: code)
+    end
+
+    def riews_table(view, page=1)
+      if view.model.present? && view.columns.any?
+        [
+            generate_view_content_for(view, page),
+            generate_view_paginator_for(view, page),
+            generate_helper_buttons_for(view)
+        ].compact.inject(:+)
+      else
+        render partial: 'riews/views/empty_view', locals: {view: view}
+      end
     end
 
     private

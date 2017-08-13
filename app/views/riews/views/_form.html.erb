@@ -4,13 +4,35 @@
     <%= f.input :code %>
     <%= f.input :paginator_size %>
 
-    <% if view.persisted? && view.model %>
+    <% if view.persisted? && view.model.present? %>
         <%= content_tag :h3, 'Relationships' %>
-        <%= f.fields_for :relationships do |ff| %>
-            <%= render 'relationship_fields', f: ff %>
+        <%= content_tag :div, class: 'form-inline' do %>
+            <%= f.fields_for :relationships do |ff| %>
+                <%= render 'relationship_fields', f: ff %>
+            <% end %>
         <% end %>
         <%= content_tag :div do %>
             <%= link_to_add_association 'Add relationship', f, :relationships %>
+        <% end %>
+
+        <%= content_tag :h3, 'Columns' %>
+        <%= content_tag :div, class: 'form-inline' do %>
+            <%= f.fields_for :columns do |ff| %>
+                <%= render 'column_fields', f: ff %>
+            <% end %>
+        <% end %>
+        <%= content_tag :div do %>
+            <%= link_to_add_association 'Add column', f, :columns %>
+        <% end %>
+
+        <%= content_tag :h3, 'Filters' %>
+        <%= content_tag :div, class: 'form-inline' do %>
+            <%= f.simple_fields_for :filter_criterias do |ff| %>
+                <%= render 'filter_criteria_fields', f: ff %>
+            <% end %>
+        <% end %>
+        <%= content_tag :div do %>
+            <%= link_to_add_association 'Add filter', f, :filter_criterias %>
         <% end %>
     <% end %>
 
