@@ -49,7 +49,8 @@ module Riews
     end
 
     def filter_criteria_params
-      params.require(:filter_criteria).permit(:field_name, :operator, arguments_attributes: [:value, :id, :_destroy])
+      params.require(:filter_criteria).permit(:field_name, :operator, :negation,
+                                              arguments_attributes: [:value, :id, :_destroy])
     end
   end
 end

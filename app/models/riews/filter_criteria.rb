@@ -32,30 +32,31 @@ module Riews
     end
 
     def apply_to(query)
-      case operator
-        when 1
-          query.where(field_name => nil)
-        when 2
-          query.where.not(field_name => nil)
-        when 3, 4
-          query.where(field_name => arguments.pluck(:value))
-        when 5
-          query.where("#{field_name} LIKE ?", "#{arguments.first.value}") if arguments.any?
-        when 6
-          query.where(field_name => (arguments.first.value..arguments.last.value)) if arguments.count == 2
-        when 7
-          query.where("#{field_name} > ?", "#{arguments.first.value}") if arguments.count == 1
-        when 8
-          query.where("#{field_name} >= ?", "#{arguments.first.value}") if arguments.count == 1
-        when 9
-          query.where("#{field_name} < ?", "#{arguments.first.value}") if arguments.count == 1
-        when 10
-          query.where("#{field_name} <= ?", "#{arguments.first.value}") if arguments.count == 1
-        when 11
-          query.where("#{field_name} REGEXP ?", "#{arguments.first.value}") if arguments.count == 1
-        else
-          query
-      end
+      query_modifier = case operator
+                         when 1
+                           {field_name => nil}
+                         when 2
+                           ["#{field_name} IS NOT NULL"]
+                         when 3, 4
+                           {field_name => arguments.pluck(:value)}
+                         when 5
+                           ["#{field_name} LIKE ?", "#{arguments.first.value}"] if arguments.any?
+                         when 6
+                           {field_name => (arguments.first.value..arguments.last.value)} if arguments.count == 2
+                         when 7
+                           ["#{field_name} > ?", "#{arguments.first.value}"] if arguments.count == 1
+                         when 8
+                           ["#{field_name} >= ?", "#{arguments.first.value}"] if arguments.count == 1
+                         when 9
+                           ["#{field_name} < ?", "#{arguments.first.value}"] if arguments.count == 1
+                         when 10
+                           ["#{field_name} <= ?", "#{arguments.first.value}"] if arguments.count == 1
+                         when 11
+                           ["#{field_name} REGEXP ?", "#{arguments.first.value}"] if arguments.count == 1
+                         else
+                           nil
+                       end
+      negation? ? query.where.not(query_modifier) : query.where(query_modifier)
     end
   end
 end

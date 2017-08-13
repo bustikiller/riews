@@ -6,6 +6,7 @@
     table.headers << 'Field'
     table.headers << 'Operator'
     table.headers << 'Arguments'
+    table.headers << 'Negation'
     table.headers << 'Show'
     table.headers << 'Edit'
     table.headers << 'Destroy'
@@ -15,6 +16,7 @@
           filter_criteria.field_name,
           Riews::FilterCriteria.operators[filter_criteria.operator],
           filter_criteria.arguments.map(&:value).join(', '),
+          filter_criteria.negation,
           link_to('Show filter', view_filter_path(filter_criteria.view, filter_criteria)),
           link_to('Edit filter', edit_view_filter_path(filter_criteria.view, filter_criteria)),
           link_to('Destroy filter', view_filter_path(filter_criteria.view, filter_criteria), method: :delete, data: { confirm: 'Are you sure?' })
