@@ -23,7 +23,7 @@ module Riews
     end
 
     def self.available_models
-      ActiveRecord::Base.descendants.map(&:name)
+      ActiveRecord::Base.connection.tables.map{|x|x.classify.safe_constantize}.compact.map(&:name)
     end
 
     def available_reflections
