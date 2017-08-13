@@ -1,9 +1,11 @@
 module Riews
   module ViewsHelper
     def generate_view_content_for(view, page=1)
-      bootstrap_table do |table|
-        table.headers = view.columns.map(&:method)
-        table.rows = get_affected_models(view, page).pluck(*view.columns.map(&:method).map(&:to_sym))
+      if view.columns.any?
+        bootstrap_table do |table|
+          table.headers = view.columns.map(&:method)
+          table.rows = get_affected_models(view, page).pluck(*view.columns.map(&:method).map(&:to_sym))
+        end
       end
     end
 
