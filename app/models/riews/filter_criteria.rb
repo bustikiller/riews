@@ -13,7 +13,8 @@ module Riews
           7 => '>',
           8 => '>=',
           9 => '<',
-          10 => '<='
+          10 => '<=',
+          11 => 'REGEXP'
       }
     end
 
@@ -50,6 +51,8 @@ module Riews
           query.where("#{field_name} < ?", "#{arguments.first.value}") if arguments.count == 1
         when 10
           query.where("#{field_name} <= ?", "#{arguments.first.value}") if arguments.count == 1
+        when 11
+          query.where("#{field_name} REGEXP ?", "#{arguments.first.value}") if arguments.count == 1
         else
           query
       end
