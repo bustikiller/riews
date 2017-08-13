@@ -7,7 +7,8 @@ module Riews
           1 => 'NULL',
           2 => 'NOT NULL',
           3 => '=',
-          4 => 'IN'
+          4 => 'IN',
+          5 => 'LIKE'
       }
     end
 
@@ -32,6 +33,8 @@ module Riews
           query.where.not(field_name => nil)
         when 3, 4
           query.where(field_name => arguments.pluck(:value))
+        when 5
+          query.where("#{field_name} LIKE ?", "#{arguments.first.value}") if arguments.any?
         else
           query
       end
