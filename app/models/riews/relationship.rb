@@ -4,6 +4,6 @@ module Riews
     alias_method :view, :riews_view
 
     validates_presence_of :view
-    validates :name, presence: true
+    validates :name, presence: true, inclusion: { in: proc{|r| r.view.klass.reflections.keys }}
   end
 end
