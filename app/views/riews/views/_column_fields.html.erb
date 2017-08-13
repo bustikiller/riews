@@ -5,5 +5,6 @@
                 value_method: :downcase %>
     <%= f.input :prefix %>
     <%= f.input :postfix %>
+    <%= f.input :aggregate, as: :select, collection: aggregation_functions_for_select, value_method: :first, label_method: :last %>
     <%= link_to_remove_association 'Remove column', f %>
 <% end %>

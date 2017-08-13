@@ -19,6 +19,7 @@ module Riews
       query = query.per(per_page) if per_page > 0
       query = join_relationships query
       query = filter_results query
+      query = group_query query
       uniqueness? ? query.distinct : query
     end
 
@@ -66,6 +67,10 @@ module Riews
 
     def set_default_values
       self.name = self.code
+    end
+
+    def group_query(query)
+      query.group(columns.select{|c| c.aggregate == 0}.map(&:method))
     end
   end
 end

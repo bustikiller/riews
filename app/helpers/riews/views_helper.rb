@@ -45,7 +45,7 @@ module Riews
     end
 
     def render_view_rows(page, view)
-      rows = get_affected_models(view, page).pluck(*view.columns.map(&:method).map(&:to_sym))
+      rows = get_affected_models(view, page).pluck(*view.columns.map(&:db_column))
       rows.map! do |row|
         Array(row).each_with_index.map{|cell, i| view.columns[i].format cell }
       end
