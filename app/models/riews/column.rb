@@ -6,5 +6,9 @@ module Riews
 
     validates_presence_of :view
     validates :method, presence: true, inclusion:  {in: proc{ |view| view.available_columns }}
+
+    def format(value)
+      "#{prefix}#{value}#{postfix}"
+    end
   end
 end

@@ -37,7 +37,7 @@ module Riews
     # PATCH/PUT /columns/1
     def update
       if @column.update(column_params)
-        redirect_to @column, notice: 'Column was successfully updated.'
+        redirect_to view_columns_path @column.view, notice: 'Column was successfully updated.'
       else
         render :edit
       end
@@ -57,7 +57,7 @@ module Riews
 
       # Only allow a trusted parameter "white list" through.
       def column_params
-        params.require(:column).permit(:method)
+        params.require(:column).permit(:method, :prefix, :postfix)
       end
   end
 end

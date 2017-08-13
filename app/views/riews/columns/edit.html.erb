@@ -1,6 +1,4 @@
-<h1>Editing Column</h1>
-
-<%= render 'form', column: @column %>
-
-<%= link_to 'Show', @column %> |
-<%= link_to 'Back', columns_path %>
+<%= panel_with_body title: 'Edit Column' do %>
+    <%= render 'form', column: @column %>
+    <%= link_to 'Back', view_columns_path(@column.view) %>
+<% end %>

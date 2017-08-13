@@ -4,7 +4,7 @@ module Riews
       if view.columns.any?
         bootstrap_table do |table|
           table.headers = view.columns.map(&:method)
-          table.rows = get_affected_models(view, page).pluck(*view.columns.map(&:method).map(&:to_sym))
+          table.rows = render_view_rows(page, view)
         end
       else
         render partial: 'riews/views/empty_view', locals: {view: view}
@@ -37,6 +37,14 @@ module Riews
 
     def get_affected_models(view, page)
       view.results(page, view.paginator_size)
+    end
+
+    def render_view_rows(page, view)
+      rows = get_affected_models(view, page).pluck(*view.columns.map(&:method).map(&:to_sym))
+      rows.map! do |row|
+        row.each_with_index.map{|cell, i| view.columns[i].format cell }
+      end
+      rows
     end
   end
 end
