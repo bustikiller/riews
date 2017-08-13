@@ -19,7 +19,7 @@ module Riews
       query = query.per(per_page) if per_page > 0
       query = join_relationships query
       query = filter_results query
-      query = query.distinct if uniqueness
+      uniqueness? ? query.distinct : query
     end
 
     def self.available_models
