@@ -1,6 +1,7 @@
-<h1>Editing View</h1>
+<%= panel_with_body title: 'Edit view' do %>
 
-<%= render 'form', view: @view %>
+    <%= render 'form', view: @view %>
 
-<%= link_to 'Show', @view %> |
-<%= link_to 'Back', views_path %>
+    <%= link_to 'Show', @view %> |
+    <%= link_to 'Back', views_path %>
+<% end %>

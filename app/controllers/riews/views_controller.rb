@@ -21,6 +21,7 @@ module Riews
 
     # GET /views/1/edit
     def edit
+      @view.relationships.build
     end
 
     # POST /views
@@ -57,7 +58,8 @@ module Riews
 
       # Only allow a trusted parameter "white list" through.
       def view_params
-        params.require(:view).permit(:name, :model, :code, :paginator_size)
+        params.require(:view).permit(:name, :model, :code, :paginator_size,
+                                     relationships_attributes: [:id, :_destroy, :name])
       end
   end
 end

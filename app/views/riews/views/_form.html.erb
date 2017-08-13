@@ -3,5 +3,14 @@
     <%= f.input :model, as: :select, collection: Riews::View.available_models %>
     <%= f.input :code %>
     <%= f.input :paginator_size %>
+
+    <%= content_tag :h3, 'Relationships' %>
+    <%= f.fields_for :relationships do |ff| %>
+        <%= render 'relationship_fields', f: ff %>
+    <% end %>
+    <%= content_tag :div do %>
+        <%= link_to_add_association 'Add relationship', f, :relationships %>
+    <% end %>
+
     <%= f.submit %>
 <% end %>

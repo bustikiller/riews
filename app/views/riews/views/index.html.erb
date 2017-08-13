@@ -5,6 +5,7 @@
     table.headers << 'Name'
     table.headers << 'Model'
     table.headers << 'Code'
+    table.headers << 'Relationships'
     table.headers << 'Show'
     table.headers << 'Edit'
     table.headers << 'Destroy'
@@ -14,6 +15,7 @@
           view.name,
           view.model,
           view.code,
+          view.relationships.pluck(:name).join(', '),
           link_to('Show view', view_path(view)),
           link_to('Edit view', edit_view_path(view)),
           link_to('Destroy view', view, method: :delete, data: { confirm: 'Are you sure?' })
