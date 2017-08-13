@@ -3,10 +3,7 @@ module Riews
     def generate_view_content_for(view, page=1)
       bootstrap_table do |table|
         table.headers = view.columns.map(&:method)
-
-        get_affected_models(view, page).each do |object|
-          table.rows << view.columns.map{ |column| object[column.method] }
-        end
+        table.rows = get_affected_models(view, page).pluck(*view.columns.map(&:method).map(&:to_sym))
       end
     end
 
@@ -17,7 +14,7 @@ module Riews
     private
 
     def get_affected_models(view, page)
-      view.results(page, view.paginator_size).select(view.columns.map(&:method))
+      view.results(page, view.paginator_size)
     end
   end
 end

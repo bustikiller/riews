@@ -7,7 +7,16 @@ module Riews
     validates :method, presence: true, inclusion:  {in: proc{ |view| view.available_columns }}
 
     def available_columns
-      (view.model.constantize).attribute_names
+      in_table_columns = (view.klass).attribute_names
+
+      in_relationships_columns = view.klass.reflections
+                            .select{|k, _| view.relationships.pluck(:name).include? k}
+                            .values
+                            .map(&:klass)
+                            .map{|klass| klass.attribute_names
+                                             .map{|attribute| [klass.table_name, attribute].join('.')}}.flatten
+
+      in_table_columns + in_relationships_columns
     end
   end
 end

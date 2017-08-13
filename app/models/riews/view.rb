@@ -13,7 +13,7 @@ module Riews
     validates :paginator_size, :numericality => { :greater_than_or_equal_to => 0 }
 
     def results(page, per_page)
-      query = model.constantize.all
+      query = klass.all
       query = query.page(page)
       query = query.per(per_page) if per_page > 0
       query = join_relationships query
@@ -28,6 +28,10 @@ module Riews
       if model.present?
         errors.add(:model, 'Invalid model!') unless model.constantize.ancestors.include? ActiveRecord::Base
       end
+    end
+
+    def klass
+      model.constantize
     end
 
     private
