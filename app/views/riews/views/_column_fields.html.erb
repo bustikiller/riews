@@ -1,11 +1,13 @@
-<%= content_tag :div, class: 'nested-fields' do %>
-    <%= f.input :method,
-                as: :grouped_select,
-                collection: available_columns_for_select(f.object.view), :group_method => :last,
-                value_method: :downcase %>
-    <%= f.input :name %>
-    <%= f.input :prefix %>
-    <%= f.input :postfix %>
-    <%= f.input :aggregate, as: :select, collection: aggregation_functions_for_select, value_method: :first, label_method: :last %>
-    <%= link_to_remove_association 'Remove column', f %>
+<%= panel class: 'form-inline col-md-12' do %>
+    <%= content_tag :div, class: 'nested-fields' do %>
+        <%= f.input :method,
+                    as: :grouped_select,
+                    collection: available_columns_for_select(f.object.view), :group_method => :last,
+                    value_method: :downcase %>
+        <%= f.input :name %>
+        <%= f.input :prefix %>
+        <%= f.input :postfix %>
+        <%= f.input :aggregate, as: :select, collection: aggregation_functions_for_select, value_method: :first, label_method: :last %>
+        <%= link_to_remove_association 'Remove column', f %>
+    <% end %>
 <% end %>

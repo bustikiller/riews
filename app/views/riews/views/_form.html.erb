@@ -21,10 +21,8 @@
 
           <div id="relationships" class="tab-pane fade">
             <%= content_tag :h3, 'Relationships' %>
-            <%= content_tag :div, class: 'form-inline' do %>
-                <%= f.fields_for :relationships do |ff| %>
-                    <%= render 'relationship_fields', f: ff %>
-                <% end %>
+            <%= f.fields_for :relationships do |ff| %>
+                <%= render 'relationship_fields', f: ff %>
             <% end %>
             <%= content_tag :div do %>
                 <%= link_to_add_association 'Add relationship', f, :relationships %>
@@ -32,10 +30,8 @@
           </div>
           <div id="columns" class="tab-pane fade">
             <%= content_tag :h3, 'Columns' %>
-            <%= content_tag :div, class: 'form-inline' do %>
-                <%= f.fields_for :columns do |ff| %>
-                    <%= render 'column_fields', f: ff %>
-                <% end %>
+            <%= f.fields_for :columns do |ff| %>
+                <%= render 'column_fields', f: ff %>
             <% end %>
             <%= content_tag :div do %>
                 <%= link_to_add_association 'Add column', f, :columns %>
@@ -43,10 +39,8 @@
           </div>
           <div id="filters" class="tab-pane fade">
             <%= content_tag :h3, 'Filters' %>
-            <%= content_tag :div, class: 'form-inline' do %>
-                <%= f.simple_fields_for :filter_criterias do |ff| %>
-                    <%= render 'filter_criteria_fields', f: ff %>
-                <% end %>
+            <%= f.simple_fields_for :filter_criterias do |ff| %>
+                <%= render 'filter_criteria_fields', f: ff %>
             <% end %>
             <%= content_tag :div do %>
                 <%= link_to_add_association 'Add filter', f, :filter_criterias %>
