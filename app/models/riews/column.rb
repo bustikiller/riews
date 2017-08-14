@@ -40,5 +40,9 @@ module Riews
           method.to_sym
       end
     end
+
+    def displayed_name
+      name.present? ? name : db_column
+    end
   end
 end
