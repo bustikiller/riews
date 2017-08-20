@@ -46,3 +46,9 @@ bower.json
 
 # Ignore RubyMine files
 .idea
+
+# SQLite databases
+.sqlite3
+
+# Logs
+.log
