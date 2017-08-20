@@ -1,4 +1,7 @@
 # Riews
+
+[![Build Status](https://semaphoreci.com/api/v1/bustikiller/riews/branches/master/badge.svg)](https://semaphoreci.com/bustikiller/riews)
+
 Short description and motivation.
 
 ## Usage
