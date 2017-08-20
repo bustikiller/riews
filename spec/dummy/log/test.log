@@ -965,3 +965,177 @@
   [1m[36mRiews::View Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "riews_views" WHERE "riews_views"."code" = ? LIMIT ?[0m  [["code", "helloworld"], ["LIMIT", 1]]
   [1m[36mRiews::View Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "riews_views" WHERE "riews_views"."code" = ? LIMIT ?[0m  [["code", "HELLOWORLD"], ["LIMIT", 1]]
   [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "environment"]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "environment"]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "environment"]]
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "riews_arguments"[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (104.7ms)[0m  [1m[35mCREATE TABLE "riews_arguments" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "value" varchar NOT NULL, "riews_filter_criteria_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (99.7ms)[0m  [1m[35mCREATE  INDEX "index_riews_arguments_on_riews_filter_criteria_id" ON "riews_arguments" ("riews_filter_criteria_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "riews_columns"[0m
+  [1m[35m (99.6ms)[0m  [1m[35mCREATE TABLE "riews_columns" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "method" varchar, "riews_view_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "prefix" varchar, "postfix" varchar, "aggregate" integer(2), "name" varchar)[0m
+  [1m[35m (100.9ms)[0m  [1m[35mCREATE  INDEX "index_riews_columns_on_riews_view_id" ON "riews_columns" ("riews_view_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "riews_filter_criterias"[0m
+  [1m[35m (99.5ms)[0m  [1m[35mCREATE TABLE "riews_filter_criterias" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "field_name" varchar, "operator" integer(2) NOT NULL, "riews_view_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "negation" boolean DEFAULT 'f' NOT NULL)[0m
+  [1m[35m (99.7ms)[0m  [1m[35mCREATE  INDEX "index_riews_filter_criterias_on_riews_view_id" ON "riews_filter_criterias" ("riews_view_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "riews_relationships"[0m
+  [1m[35m (99.7ms)[0m  [1m[35mCREATE TABLE "riews_relationships" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "riews_view_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (99.8ms)[0m  [1m[35mCREATE  INDEX "index_riews_relationships_on_riews_view_id" ON "riews_relationships" ("riews_view_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "riews_views"[0m
+  [1m[35m (143.9ms)[0m  [1m[35mCREATE TABLE "riews_views" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar NOT NULL, "model" varchar, "code" varchar NOT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "paginator_size" integer DEFAULT 0 NOT NULL, "uniqueness" boolean DEFAULT 'f' NOT NULL)[0m
+  [1m[35m (121.8ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (85.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20170814203309)[0m
+  [1m[35m (77.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20170813094241),
+(20170813170515),
+(20170812202251),
+(20170813150220),
+(20170813184708),
+(20170807184652),
+(20170703180436),
+(20170812223222),
+(20170812221554),
+(20170812205631),
+(20170813102612),
+(20170813144520);
+
+[0m
+  [1m[35m (101.3ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "test"], ["created_at", "2017-08-20 15:01:00.887737"], ["updated_at", "2017-08-20 15:01:00.887737"]]
+  [1m[35m (98.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mRiews::View Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "riews_views" WHERE "riews_views"."code" IS NULL LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mRiews::View Load (0.1ms)[0m  [1m[34mSELECT  "riews_views".* FROM "riews_views" ORDER BY "riews_views"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "riews_views" ("name", "code", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "helloworld"], ["code", "helloworld"], ["created_at", "2017-08-20 15:01:02.548252"], ["updated_at", "2017-08-20 15:01:02.548252"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mRiews::View Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "riews_views" WHERE "riews_views"."code" = ? LIMIT ?[0m  [["code", "helloworld"], ["LIMIT", 1]]
+  [1m[36mRiews::View Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "riews_views" WHERE "riews_views"."code" = ? LIMIT ?[0m  [["code", "HELLOWORLD"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "environment"]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "environment"]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "environment"]]
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "riews_arguments"[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (111.1ms)[0m  [1m[35mCREATE TABLE "riews_arguments" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "value" varchar NOT NULL, "riews_filter_criteria_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (111.0ms)[0m  [1m[35mCREATE  INDEX "index_riews_arguments_on_riews_filter_criteria_id" ON "riews_arguments" ("riews_filter_criteria_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "riews_columns"[0m
+  [1m[35m (109.9ms)[0m  [1m[35mCREATE TABLE "riews_columns" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "method" varchar, "riews_view_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "prefix" varchar, "postfix" varchar, "aggregate" integer(2), "name" varchar)[0m
+  [1m[35m (110.2ms)[0m  [1m[35mCREATE  INDEX "index_riews_columns_on_riews_view_id" ON "riews_columns" ("riews_view_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "riews_filter_criterias"[0m
+  [1m[35m (121.0ms)[0m  [1m[35mCREATE TABLE "riews_filter_criterias" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "field_name" varchar, "operator" integer(2) NOT NULL, "riews_view_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "negation" boolean DEFAULT 'f' NOT NULL)[0m
+  [1m[35m (109.9ms)[0m  [1m[35mCREATE  INDEX "index_riews_filter_criterias_on_riews_view_id" ON "riews_filter_criterias" ("riews_view_id")[0m
+  [1m[35m (0.3ms)[0m  [1m[35mDROP TABLE IF EXISTS "riews_relationships"[0m
+  [1m[35m (109.8ms)[0m  [1m[35mCREATE TABLE "riews_relationships" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "riews_view_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (120.8ms)[0m  [1m[35mCREATE  INDEX "index_riews_relationships_on_riews_view_id" ON "riews_relationships" ("riews_view_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "riews_views"[0m
+  [1m[35m (121.7ms)[0m  [1m[35mCREATE TABLE "riews_views" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar NOT NULL, "model" varchar, "code" varchar NOT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "paginator_size" integer DEFAULT 0 NOT NULL, "uniqueness" boolean DEFAULT 'f' NOT NULL)[0m
+  [1m[35m (99.1ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (69.7ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20170814203309)[0m
+  [1m[35m (65.9ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20170813094241),
+(20170813170515),
+(20170812202251),
+(20170813150220),
+(20170813184708),
+(20170807184652),
+(20170703180436),
+(20170812223222),
+(20170812221554),
+(20170812205631),
+(20170813102612),
+(20170813144520);
+
+[0m
+  [1m[35m (106.9ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "test"], ["created_at", "2017-08-20 15:01:15.919081"], ["updated_at", "2017-08-20 15:01:15.919081"]]
+  [1m[35m (168.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mRiews::View Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "riews_views" WHERE "riews_views"."code" IS NULL LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mRiews::View Load (0.2ms)[0m  [1m[34mSELECT  "riews_views".* FROM "riews_views" ORDER BY "riews_views"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "riews_views" ("name", "code", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "helloworld"], ["code", "helloworld"], ["created_at", "2017-08-20 15:01:17.859587"], ["updated_at", "2017-08-20 15:01:17.859587"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mRiews::View Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "riews_views" WHERE "riews_views"."code" = ? LIMIT ?[0m  [["code", "helloworld"], ["LIMIT", 1]]
+  [1m[36mRiews::View Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "riews_views" WHERE "riews_views"."code" = ? LIMIT ?[0m  [["code", "HELLOWORLD"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "environment"]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "environment"]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "environment"]]
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "riews_arguments"[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (97.9ms)[0m  [1m[35mCREATE TABLE "riews_arguments" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "value" varchar NOT NULL, "riews_filter_criteria_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (110.8ms)[0m  [1m[35mCREATE  INDEX "index_riews_arguments_on_riews_filter_criteria_id" ON "riews_arguments" ("riews_filter_criteria_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "riews_columns"[0m
+  [1m[35m (121.0ms)[0m  [1m[35mCREATE TABLE "riews_columns" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "method" varchar, "riews_view_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "prefix" varchar, "postfix" varchar, "aggregate" integer(2), "name" varchar)[0m
+  [1m[35m (99.5ms)[0m  [1m[35mCREATE  INDEX "index_riews_columns_on_riews_view_id" ON "riews_columns" ("riews_view_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "riews_filter_criterias"[0m
+  [1m[35m (99.4ms)[0m  [1m[35mCREATE TABLE "riews_filter_criterias" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "field_name" varchar, "operator" integer(2) NOT NULL, "riews_view_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "negation" boolean DEFAULT 'f' NOT NULL)[0m
+  [1m[35m (99.7ms)[0m  [1m[35mCREATE  INDEX "index_riews_filter_criterias_on_riews_view_id" ON "riews_filter_criterias" ("riews_view_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "riews_relationships"[0m
+  [1m[35m (99.3ms)[0m  [1m[35mCREATE TABLE "riews_relationships" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "riews_view_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (99.7ms)[0m  [1m[35mCREATE  INDEX "index_riews_relationships_on_riews_view_id" ON "riews_relationships" ("riews_view_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "riews_views"[0m
+  [1m[35m (100.6ms)[0m  [1m[35mCREATE TABLE "riews_views" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar NOT NULL, "model" varchar, "code" varchar NOT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "paginator_size" integer DEFAULT 0 NOT NULL, "uniqueness" boolean DEFAULT 'f' NOT NULL)[0m
+  [1m[35m (99.5ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (103.8ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20170814203309)[0m
+  [1m[35m (77.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20170813094241),
+(20170813170515),
+(20170812202251),
+(20170813150220),
+(20170813184708),
+(20170807184652),
+(20170703180436),
+(20170812223222),
+(20170812221554),
+(20170812205631),
+(20170813102612),
+(20170813144520);
+
+[0m
+  [1m[35m (106.4ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "test"], ["created_at", "2017-08-20 15:01:35.066681"], ["updated_at", "2017-08-20 15:01:35.066681"]]
+  [1m[35m (75.4ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mRiews::View Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "riews_views" WHERE "riews_views"."code" IS NULL LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mRiews::View Load (0.2ms)[0m  [1m[34mSELECT  "riews_views".* FROM "riews_views" ORDER BY "riews_views"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "riews_views" ("name", "code", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "helloworld"], ["code", "helloworld"], ["created_at", "2017-08-20 15:01:36.739131"], ["updated_at", "2017-08-20 15:01:36.739131"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mRiews::View Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "riews_views" WHERE "riews_views"."code" = ? LIMIT ?[0m  [["code", "helloworld"], ["LIMIT", 1]]
+  [1m[36mRiews::View Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "riews_views" WHERE "riews_views"."code" = ? LIMIT ?[0m  [["code", "HELLOWORLD"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
