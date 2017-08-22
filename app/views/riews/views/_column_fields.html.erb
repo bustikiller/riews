@@ -9,5 +9,6 @@
         <%= f.input :postfix %>
         <%= f.input :aggregate, as: :select, collection: aggregation_functions_for_select, value_method: :first, label_method: :last %>
         <%= link_to_remove_association 'Remove column', f %>
+        <%= f.input :pattern, as: :text, hint: 'Fill this field if you want to combine the result of several columns' %>
     <% end %>
 <% end %>
