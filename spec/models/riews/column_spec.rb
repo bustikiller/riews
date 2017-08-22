@@ -21,4 +21,27 @@ describe Riews::View, type: :model do
       end
     end
   end
+
+  describe '#format' do
+    let(:column){ build :column }
+    it 'displays the content if no prefix or postfix is provided' do
+      expect(column.format 'a').to eq 'a'
+    end
+
+    it 'uses the prefix if provided' do
+      column.prefix = '->'
+      expect(column.format 'a').to eq '->a'
+    end
+
+    it 'uses the postfix if provided'do
+      column.postfix = '<-'
+      expect(column.format 'a').to eq 'a<-'
+    end
+
+    it 'uses both the prefix and the postfix if provided'do
+      column.prefix = '->'
+      column.postfix = '<-'
+      expect(column.format 'a').to eq '->a<-'
+    end
+  end
 end
