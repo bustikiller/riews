@@ -53,7 +53,7 @@ module Riews
 
     def method_xor_pattern
       unless method.blank? ^ pattern.blank?
-        errors.add(:base, "Specify a method or a pattern, not both")
+        errors.add(:base, 'Specify a method or a pattern, not both')
       end
     end
   end

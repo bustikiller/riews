@@ -3,12 +3,21 @@
         <%= f.input :method,
                     as: :grouped_select,
                     collection: available_columns_for_select(f.object.view), :group_method => :last,
-                    value_method: :downcase %>
-        <%= f.input :name %>
-        <%= f.input :prefix %>
-        <%= f.input :postfix %>
-        <%= f.input :aggregate, as: :select, collection: aggregation_functions_for_select, value_method: :first, label_method: :last %>
-        <%= link_to_remove_association 'Remove column', f %>
-        <%= f.input :pattern, as: :text, hint: 'Fill this field if you want to combine the result of several columns' %>
+                    value_method: :downcase,
+                    wrapper_html: { class: 'col-md-6' } %>
+        <%= f.input :name, wrapper_html: { class: 'col-md-6' } %>
+        <%= f.input :prefix, wrapper_html: { class: 'col-md-6' } %>
+        <%= f.input :postfix, wrapper_html: { class: 'col-md-6' } %>
+        <%= f.input :aggregate,
+                    as: :select,
+                    collection: aggregation_functions_for_select,
+                    value_method: :first,
+                    label_method: :last,
+                    wrapper_html: { class: 'col-md-6' } %>
+        <%= f.input :pattern,
+                    as: :text,
+                    wrapper_html: { class: 'col-md-12' },
+                    hint: 'Fill this field if you want to combine the result of several columns' %>
+        <%= link_to_remove_association 'Remove column', f, class: 'col-md-12' %>
     <% end %>
 <% end %>
