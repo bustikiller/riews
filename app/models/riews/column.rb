@@ -24,6 +24,8 @@ module Riews
     validates :aggregate, inclusion: { in: aggregation_functions.keys + [nil] }
     validate :method_xor_pattern
 
+    scope :with_method, -> { where.not method: nil }
+
     def format(value)
       "#{prefix}#{value}#{postfix}"
     end
@@ -47,6 +49,17 @@ module Riews
 
     def displayed_name
       name.present? ? name : db_column
+    end
+
+    def replacement_info
+      { description: "Value of the column \"#{displayed_name}\"" }
+    end
+
+    def replacement_tokens
+      view.columns
+          .with_method
+          .map{ |column| { "[[column:#{column.id}]]" => column.replacement_info }}
+          .inject(:merge) || {}
     end
 
     private
