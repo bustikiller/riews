@@ -19,6 +19,12 @@ describe Riews::View, type: :model do
       it 'is invalid if it is not contained in the available columns' do
         expect(build :column, view: view, method: 'four').not_to be_valid
       end
+      it 'is required if the pattern is not present' do
+        expect(build :column, view: view, method: nil).not_to be_valid
+      end
+      it 'is forbidden if the pattern is present' do
+        expect(build :column, view: view, method: 'one', pattern: 'helloworld').not_to be_valid
+      end
     end
   end
 

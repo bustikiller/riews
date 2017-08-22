@@ -18,8 +18,11 @@ module Riews
     delegate :available_columns, to: :view
 
     validates_presence_of :view
-    validates :method, presence: true, inclusion:  {in: proc{ |view| view.available_columns }}
+    validates :method, allow_nil: true,
+              inclusion:  {in: proc{ |column| column.available_columns }},
+              unless: proc{ |column| column.pattern.present? }
     validates :aggregate, inclusion: { in: aggregation_functions.keys + [nil] }
+    validate :method_xor_pattern
 
     def format(value)
       "#{prefix}#{value}#{postfix}"
@@ -44,6 +47,14 @@ module Riews
 
     def displayed_name
       name.present? ? name : db_column
+    end
+
+    private
+
+    def method_xor_pattern
+      unless method.blank? ^ pattern.blank?
+        errors.add(:base, "Specify a method or a pattern, not both")
+      end
     end
   end
 end
