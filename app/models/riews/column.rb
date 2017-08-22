@@ -14,6 +14,7 @@ module Riews
 
     belongs_to :riews_view, class_name: 'Riews::View'
     alias_method :view, :riews_view
+    alias_method :view=, :riews_view=
     delegate :available_columns, to: :view
 
     validates_presence_of :view
