@@ -18,7 +18,9 @@
                     as: :text,
                     wrapper_html: { class: 'col-md-12' },
                     hint: 'Fill this field if you want to combine the result of several columns' %>
-        <%= format_replacement_tokens f.object.replacement_tokens %>
+        <%=  panel_with_body title: 'Available replacement patterns', class: 'col-md-12'  do
+          format_replacement_tokens f.object.replacement_tokens
+        end %>
         <%= link_to_remove_association 'Remove column', f, class: 'col-md-12' %>
     <% end %>
 <% end %>
