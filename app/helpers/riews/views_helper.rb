@@ -4,7 +4,7 @@ module Riews
   module ViewsHelper
     def generate_view_content_for(view, page=1)
       bootstrap_table do |table|
-        table.headers = view.columns.map(&:displayed_name)
+        table.headers = view.columns.displayed.map(&:displayed_name)
         table.rows = render_view_rows(page, view)
       end
     end
@@ -57,7 +57,7 @@ module Riews
 
     def render_single_row(columns, row)
       original_row = row.dup
-      columns.map do |column|
+      columns.displayed.map do |column|
         if column.method.present? then
           column.format(row.shift.last)
         else
