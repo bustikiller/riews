@@ -13,8 +13,6 @@ module Riews
       self.class.apply_math_operations replaced_value
     end
 
-    private
-
     def self.apply_math_operations(raw_value)
       raw_value.gsub(/\[\[calc:\((.+?)\)\]\]/) do
         expression = Regexp.last_match[1]
