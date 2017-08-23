@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170822114048) do
+ActiveRecord::Schema.define(version: 20170823175023) do
 
   create_table "riews_arguments", force: :cascade do |t|
     t.string "value", null: false
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 20170822114048) do
     t.integer "aggregate", limit: 2
     t.string "name"
     t.string "pattern"
+    t.boolean "hide_from_display", default: false
     t.index ["riews_view_id"], name: "index_riews_columns_on_riews_view_id"
   end
 
