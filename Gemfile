@@ -9,6 +9,7 @@ gem 'bootstrap-sass'
 gem 'rails_bootstrap_navbar'
 gem 'kaminari'
 gem 'cocoon', '~>1.2.10'
+gem 'dentaku'
 
 group :development, :test do
   gem 'pry'

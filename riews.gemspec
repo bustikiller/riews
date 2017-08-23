@@ -20,6 +20,7 @@ Gem::Specification.new do |s|
   s.add_dependency "rails", ">= 3.0.0"
   s.add_dependency "kaminari", "~>1.0.1"
   s.add_dependency "cocoon", "~>1.2.10"
+  s.add_dependency "dentaku", "~>2.0.11"
 
   s.add_development_dependency 'sqlite3'
   s.add_development_dependency 'rspec-rails'

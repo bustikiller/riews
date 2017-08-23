@@ -47,7 +47,7 @@ describe Riews::ColumnPattern do
       expect(Riews::ColumnPattern.apply_math_operations('[[calc:(3+2)]] out of [[calc:(8*2)]]')).to eq '5 out of 16'
     end
     it 'returns [MATH ERROR] if the operation returns any error' do
-      expect(Riews::ColumnPattern.apply_math_operations('[[calc:(3+)]]')).to eq '[MATH ERROR]'
+      expect(Riews::ColumnPattern.apply_math_operations('[[calc:(3/0)]]')).to eq '[MATH ERROR]'
     end
   end
 end

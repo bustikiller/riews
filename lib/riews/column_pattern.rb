@@ -1,3 +1,5 @@
+require 'dentaku'
+
 module Riews
   class ColumnPattern
 
@@ -14,7 +16,12 @@ module Riews
     private
 
     def self.apply_math_operations(raw_value)
-      raw_value
+      raw_value.gsub(/\[\[calc:\((.+?)\)\]\]/) do
+        expression = Regexp.last_match[1]
+        Dentaku::Calculator.new.evaluate(expression)
+      end
+    rescue StandardError
+      '[MATH ERROR]'
     end
   end
 end
