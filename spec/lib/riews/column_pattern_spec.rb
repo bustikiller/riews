@@ -27,5 +27,27 @@ describe Riews::ColumnPattern do
       replacements = { 45 => 'wonderful' }
       expect(pattern.format replacements).to eq 'Hello [[column:46]] world'
     end
+
+    it 'calls the method #apply_math_operations with the result of the replacements' do
+      pattern = Riews::ColumnPattern.new('Hello [[column:45]] world')
+      expect(pattern.class).to receive(:apply_math_operations).with('Hello wonderful world')
+      replacements = { 45 => 'wonderful' }
+      pattern.format replacements
+    end
+  end
+
+  describe '#apply_math_operations' do
+    it 'returns the original value if no operation was found' do
+      expect(Riews::ColumnPattern.apply_math_operations('Helloworld')).to eq 'Helloworld'
+    end
+    it 'performs a single operation if found' do
+      expect(Riews::ColumnPattern.apply_math_operations('[[calc:(3+2)]]')).to eq '5'
+    end
+    it 'performs several operations' do
+      expect(Riews::ColumnPattern.apply_math_operations('[[calc:(3+2)]] out of [[calc:(8*2)]]')).to eq '5 out of 16'
+    end
+    it 'returns [MATH ERROR] if the operation returns any error' do
+      expect(Riews::ColumnPattern.apply_math_operations('[[calc:(3+)]]')).to eq '[MATH ERROR]'
+    end
   end
 end
