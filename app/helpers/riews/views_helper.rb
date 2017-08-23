@@ -1,3 +1,5 @@
+require 'riews/column_pattern'
+
 module Riews
   module ViewsHelper
     def generate_view_content_for(view, page=1)
@@ -45,11 +47,23 @@ module Riews
     end
 
     def render_view_rows(page, view)
-      rows = get_affected_models(view, page).pluck(*view.columns.map(&:db_column))
-      rows.map! do |row|
-        Array(row).each_with_index.map{|cell, i| view.columns[i].format cell }
+      columns_queried = view.columns.with_method
+      rows = get_affected_models(view, page).pluck(*columns_queried.map(&:db_column))
+      rows.map do |row|
+        row_with_context = row.each_with_index.map{ |value, i| { columns_queried[i].id => value } }.inject({}, :merge)
+        render_single_row(view.columns, row_with_context)
       end
-      rows
+    end
+
+    def render_single_row(columns, row)
+      original_row = row.dup
+      columns.map do |column|
+        if column.method.present? then
+          column.format(row.shift.last)
+        else
+          Riews::ColumnPattern.new(column.pattern).format(original_row)
+        end
+      end
     end
   end
 end

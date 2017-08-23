@@ -24,7 +24,7 @@ module Riews
     validates :aggregate, inclusion: { in: aggregation_functions.keys + [nil] }
     validate :method_xor_pattern
 
-    scope :with_method, -> { where.not method: nil }
+    scope :with_method, -> { where.not method: [nil, ''] }
 
     def format(value)
       "#{prefix}#{value}#{postfix}"
