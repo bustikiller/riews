@@ -25,6 +25,7 @@ module Riews
     validate :method_xor_pattern
 
     scope :with_method, -> { where.not method: [nil, ''] }
+    scope :displayed, -> { where hide_from_display: false }
 
     def format(value)
       "#{prefix}#{value}#{postfix}"
