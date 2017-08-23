@@ -20,6 +20,11 @@ module Riews
       ].inject{|sum, link| sum +' | ' + link }
     end
 
+    def generate_raw_sql_for(view, page=1)
+      sql_statement = get_affected_models(view, page).select(*view.queried_column_db_identifiers).to_sql
+      content_tag :code, sql_statement, class: 'col-md-12'
+    end
+
     def riews_table_with_code(code)
       riews_table(View.find_or_create_by code: code)
     end
@@ -29,6 +34,7 @@ module Riews
         [
             generate_view_content_for(view, page),
             generate_view_paginator_for(view, page),
+            generate_raw_sql_for(view, page),
             generate_helper_buttons_for(view)
         ].compact.inject(:+)
       else
@@ -48,7 +54,7 @@ module Riews
 
     def render_view_rows(page, view)
       columns_queried = view.columns.with_method
-      rows = get_affected_models(view, page).pluck(*columns_queried.map(&:db_column))
+      rows = get_affected_models(view, page).pluck(*view.queried_column_db_identifiers)
       rows.map do |row|
         row_with_context = row.each_with_index.map{ |value, i| { columns_queried[i].id => value } }.inject({}, :merge)
         render_single_row(view.columns, row_with_context)
