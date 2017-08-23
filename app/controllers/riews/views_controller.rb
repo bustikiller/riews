@@ -59,7 +59,7 @@ module Riews
     def view_params
       params.require(:view).permit(:name, :model, :code, :uniqueness, :paginator_size,
                                    columns_attributes: [:id, :_destroy, :method, :prefix, :postfix, :aggregate, :name,
-                                                        :pattern],
+                                                        :pattern, :hide_from_display],
                                    relationships_attributes: [:id, :_destroy, :name],
                                    filter_criterias_attributes: [:field_name, :operator, :negation, :id, :_destroy,
                                                                  arguments_attributes: [:value, :id, :_destroy]])
