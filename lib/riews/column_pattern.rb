@@ -6,7 +6,8 @@ module Riews
     end
 
     def format(row)
-      @pattern
+      replacement_patterns = row.map{|k, v| ["[[column:#{k}]]", v]}.to_h
+      replacement_patterns.inject(@pattern){|acc, (key, replacement)| acc.gsub(key, replacement.to_s)}
     end
   end
 end
