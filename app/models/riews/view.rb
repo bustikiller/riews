@@ -57,6 +57,10 @@ module Riews
       model.constantize
     end
 
+    def queried_column_db_identifiers
+      columns.with_method.map(&:db_column)
+    end
+
     private
 
     def filter_results(original_query)
