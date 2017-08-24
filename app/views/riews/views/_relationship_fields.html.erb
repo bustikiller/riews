@@ -1,6 +1,9 @@
 <%= panel class: 'form-inline col-md-12' do %>
     <%= content_tag :div, class: 'nested-fields' do %>
-        <%= f.input :name, as: :select, collection: f.object.view.available_reflections %>
-        <%= link_to_remove_association 'Remove relationship', f %>
+        <%= f.input :name,
+                    as: :select,
+                    collection: f.object.view.available_reflections,
+                    wrapper_html: { class: 'col-md-6' }%>
+        <%= link_to_remove_association 'Remove relationship', f, class: 'col-md-6' %>
     <% end %>
 <% end %>

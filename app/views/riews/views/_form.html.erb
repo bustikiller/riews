@@ -11,11 +11,15 @@
 
     <div class="tab-content">
       <div id="basic" class="tab-pane fade in active">
-        <%= f.input :name %>
-        <%= f.input :model, as: :select, collection: Riews::View.available_models, include_blank: false %>
-        <%= f.input :code %>
-        <%= f.input :uniqueness %>
-        <%= f.input :paginator_size %>
+        <%= f.input :name, wrapper_html: { class: 'col-md-6' } %>
+        <%= f.input :model,
+                    as: :select,
+                    collection: Riews::View.available_models,
+                    include_blank: false,
+                    wrapper_html: { class: 'col-md-6' }%>
+        <%= f.input :code, wrapper_html: { class: 'col-md-6' } %>
+        <%= f.input :paginator_size, wrapper_html: { class: 'col-md-6' } %>
+        <%= f.input :uniqueness, wrapper_html: { class: 'col-md-6' } %>
       </div>
       <% if view.persisted? && view.model.present? %>
 
@@ -49,5 +53,5 @@
           </div>
       <% end %>
 
-      <%= f.submit %>
+      <%= f.submit class: 'col-md-12' %>
 <% end %>
