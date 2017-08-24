@@ -2,6 +2,7 @@
 
 [![Build Status](https://semaphoreci.com/api/v1/bustikiller/riews/branches/master/badge.svg)](https://semaphoreci.com/bustikiller/riews)
 [![security](https://hakiri.io/github/bustikiller/riews/master.svg)](https://hakiri.io/github/bustikiller/riews/master)
+[![Coverage Status](https://coveralls.io/repos/github/bustikiller/riews/badge.svg?branch=master)](https://coveralls.io/github/bustikiller/riews?branch=master)
 
 Short description and motivation.
 
