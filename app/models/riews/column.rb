@@ -1,19 +1,28 @@
 module Riews
   class Column < ApplicationRecord
 
-    def self.aggregation_functions
+    def self.functions_info
       {
-          0 => 'GROUP',
-          1 => 'SUM',
-          2 => 'MAX',
-          3 => 'MIN',
-          4 => 'AVG',
-          5 => 'COUNT'
+          group: { code: 0, name: 'GROUP' },
+          sum:   { code: 1, name: 'SUM'   },
+          max:   { code: 2, name: 'MAX'   },
+          min:   { code: 3, name: 'MIN'   },
+          avg:   { code: 4, name: 'AVG'   },
+          count: { code: 5, name: 'COUNT' },
       }
     end
+    private_class_method :functions_info
 
     def self.functions
-      aggregation_functions.invert.transform_keys{ |k| k.downcase.to_sym }
+      functions_info.values.map{|pair| {pair[:name].downcase.to_sym => pair[:code]}}.inject(:merge)
+    end
+
+    def self.aggregation_keys
+      functions.values
+    end
+
+    def self.function_names
+      functions_info.values.map(&:values).to_h
     end
 
     belongs_to :riews_view, class_name: 'Riews::View'
@@ -25,7 +34,7 @@ module Riews
     validates :method, allow_nil: true,
               inclusion:  {in: proc{ |column| column.available_columns }},
               unless: proc{ |column| column.pattern.present? }
-    validates :aggregate, inclusion: { in: aggregation_functions.keys + [nil] }
+    validates :aggregate, inclusion: { in: aggregation_keys + [nil] }
     validate :method_xor_pattern
 
     scope :with_method, -> { where.not method: [nil, ''] }

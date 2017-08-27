@@ -94,7 +94,7 @@ describe Riews::View, type: :model do
       expect(column.replacement_info[:description]).to eq 'Value of the column "My custom name"'
     end
   end
-  
+
   describe '#db_column' do
     it 'returns a sum statement when the aggregation function is sum' do
       column = build :column, method: 'age', aggregate: Riews::Column.functions[:sum]
@@ -127,6 +127,37 @@ describe Riews::View, type: :model do
     it 'returns nil if the column has no method' do
       column = build :column
       expect(column.db_column).to eq nil
+    end
+  end
+
+  describe '#aggregation_keys' do
+    it 'returns a list of keys of the different aggregation functions available' do
+      expect(Riews::Column.aggregation_keys).to contain_exactly *(0..5).to_a
+    end
+  end
+
+  describe '#function_names' do
+    it 'returns a hash with the function code as key, and the uppercase name as value' do
+      expect(Riews::Column.function_names).to eq ({
+          0 => 'GROUP',
+          1 => 'SUM',
+          2 => 'MAX',
+          3 => 'MIN',
+          4 => 'AVG',
+          5 => 'COUNT'
+      })
+    end
+  end
+
+  describe '#functions_info' do
+    it 'should be private' do
+      expect(Riews::Column.private_methods).to include :functions_info
+    end
+  end
+
+  describe '#functions' do
+    it 'returns a hash with the column name as a downcased symbol and the code as the value' do
+      expect(Riews::Column.functions).to eq ({group: 0, sum: 1, max: 2, min: 3, avg: 4, count: 5})
     end
   end
 end

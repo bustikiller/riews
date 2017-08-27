@@ -1,7 +1,7 @@
 module Riews
   module ColumnsHelper
     def aggregation_functions_for_select
-      Riews::Column.aggregation_functions.to_a
+      Riews::Column.function_names.to_a
     end
 
     def format_replacement_tokens(tokens)
