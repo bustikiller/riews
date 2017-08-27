@@ -94,4 +94,39 @@ describe Riews::View, type: :model do
       expect(column.replacement_info[:description]).to eq 'Value of the column "My custom name"'
     end
   end
+  
+  describe '#db_column' do
+    it 'returns a sum statement when the aggregation function is sum' do
+      column = build :column, method: 'age', aggregate: Riews::Column.functions[:sum]
+      expect(column.db_column).to eq 'SUM(age)'
+    end
+    it 'returns a max statement when the aggregation function is max' do
+      column = build :column, method: 'age', aggregate: Riews::Column.functions[:max]
+      expect(column.db_column).to eq 'MAX(age)'
+    end
+    it 'returns a min statement when the aggregation function is min' do
+      column = build :column, method: 'age', aggregate: Riews::Column.functions[:min]
+      expect(column.db_column).to eq 'MIN(age)'
+    end
+    it 'returns a avg statement when the aggregation function is avg' do
+      column = build :column, method: 'age', aggregate: Riews::Column.functions[:avg]
+      expect(column.db_column).to eq 'AVG(age)'
+    end
+    it 'returns a count statement when the aggregation function is count' do
+      column = build :column, method: 'age', aggregate: Riews::Column.functions[:count]
+      expect(column.db_column).to eq 'COUNT(*)'
+    end
+    it 'returns the method as a symbol if the aggregation function is not valid' do
+      column = build :column, method: 'age', aggregate: 45
+      expect(column.db_column).to eq :age
+    end
+    it 'returns the method as a symbol if the aggregation function is not present' do
+      column = build :column, method: 'age'
+      expect(column.db_column).to eq :age
+    end
+    it 'returns nil if the column has no method' do
+      column = build :column
+      expect(column.db_column).to eq nil
+    end
+  end
 end

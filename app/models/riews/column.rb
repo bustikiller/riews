@@ -12,6 +12,10 @@ module Riews
       }
     end
 
+    def self.functions
+      aggregation_functions.invert.transform_keys{ |k| k.downcase.to_sym }
+    end
+
     belongs_to :riews_view, class_name: 'Riews::View'
     alias_method :view, :riews_view
     alias_method :view=, :riews_view=
@@ -32,6 +36,7 @@ module Riews
     end
 
     def db_column
+      return nil unless method.present?
       case aggregate
         when 1
           "SUM(#{method})"
