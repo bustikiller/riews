@@ -116,6 +116,10 @@ describe Riews::View, type: :model do
       column = build :column, method: 'age', aggregate: Riews::Column.functions[:count]
       expect(column.db_column).to eq 'COUNT(*)'
     end
+    it 'returns the method as string if the aggregation function is group' do
+      column = build :column, method: 'age', aggregate: Riews::Column.functions[:group]
+      expect(column.db_column).to eq 'age'
+    end
     it 'returns the method as a symbol if the aggregation function is not valid' do
       column = build :column, method: 'age', aggregate: 45
       expect(column.db_column).to eq :age
