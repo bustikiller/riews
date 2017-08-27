@@ -3,12 +3,12 @@ module Riews
 
     def self.functions_info
       {
-          group: { code: 0, name: 'GROUP' },
-          sum:   { code: 1, name: 'SUM'   },
-          max:   { code: 2, name: 'MAX'   },
-          min:   { code: 3, name: 'MIN'   },
-          avg:   { code: 4, name: 'AVG'   },
-          count: { code: 5, name: 'COUNT' },
+          group: { code: 0, name: 'GROUP', function: Proc.new { |column| column } },
+          sum:   { code: 1, name: 'SUM'  , function: Proc.new { |column| "SUM(#{column})" } },
+          max:   { code: 2, name: 'MAX'  , function: Proc.new { |column| "MAX(#{column})" } },
+          min:   { code: 3, name: 'MIN'  , function: Proc.new { |column| "MIN(#{column})" } },
+          avg:   { code: 4, name: 'AVG'  , function: Proc.new { |column| "AVG(#{column})" } },
+          count: { code: 5, name: 'COUNT', function: Proc.new { |_| 'COUNT(*)'} },
       }
     end
     private_class_method :functions_info
@@ -22,7 +22,11 @@ module Riews
     end
 
     def self.function_names
-      functions_info.values.map(&:values).to_h
+      functions_info.values.map{|info| [info[:code], info[:name]]}.to_h
+    end
+
+    def self.function_lambdas
+      functions_info.values.map{|info| [info[:code], info[:function]]}.to_h
     end
 
     belongs_to :riews_view, class_name: 'Riews::View'
@@ -46,20 +50,8 @@ module Riews
 
     def db_column
       return nil unless method.present?
-      case aggregate
-        when 1
-          "SUM(#{method})"
-        when 2
-          "MAX(#{method})"
-        when 3
-          "MIN(#{method})"
-        when 4
-          "AVG(#{method})"
-        when 5
-          'COUNT(*)'
-        else
-          method.to_sym
-      end
+      return method.to_sym unless self.class.aggregation_keys.include?(aggregate)
+      self.class.function_lambdas[aggregate].call(method)
     end
 
     def displayed_name
