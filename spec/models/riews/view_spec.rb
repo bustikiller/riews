@@ -52,4 +52,19 @@ describe Riews::View, type: :model do
       view.send :group_query, query
     end
   end
+
+  describe '#join_relationships' do
+    it 'calls the ActiveRecord::Relation method #joins with the names of the associations chosen' do
+      view = create :view
+      allow(view).to receive(:available_reflections){ %w(foo bar) }
+      create :relationship, view: view, name: 'foo'
+      create :relationship, view: view, name: 'bar'
+
+      query = Object.new
+      allow(query).to receive(:joins)
+
+      expect(query).to receive(:joins).with([:foo, :bar])
+      view.send :join_relationships, query
+    end
+  end
 end
