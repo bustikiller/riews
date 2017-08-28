@@ -67,4 +67,22 @@ describe Riews::View, type: :model do
       view.send :join_relationships, query
     end
   end
+
+  describe '#queried_columns_db_identifiers' do
+    it 'returms an empty list if the view has no columns' do
+      expect(build(:view).queried_column_db_identifiers).to be_empty
+    end
+    it 'returns an empty view if no column has method' do
+      view = create :view
+      create :column, view: view, method: nil, pattern: 'whatever'
+      expect(view.queried_column_db_identifiers).to be_empty
+    end
+    it 'returns a list of strings with the result of calling db_column on the columns with method' do
+      view = create :view
+      allow(view).to receive(:available_columns){ %w(foo bar) }
+      create :column, view: view, method: nil, pattern: 'foo'
+      create :column, view: view, method: 'bar'
+      expect(view.queried_column_db_identifiers).to contain_exactly :bar
+    end
+  end
 end
