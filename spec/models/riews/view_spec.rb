@@ -85,4 +85,49 @@ describe Riews::View, type: :model do
       expect(view.queried_column_db_identifiers).to contain_exactly :bar
     end
   end
+
+  describe '#results' do
+    class self::MyModel < ActiveRecord::Base
+    end
+
+    let(:test_class){ self.class::MyModel }
+    let(:view) { create :view, model: test_class.name }
+
+    it 'returns an ActiveRecord::Relation' do
+      expect(view.results(1, 0)).to be_an ActiveRecord::Relation
+    end
+    it 'bases the query on the model of the view' do
+      expect(view.results(1, 0).table_name).to eq 'my_models'
+    end
+    it 'performs the join operations' do
+      expect(view).to receive(:join_relationships).and_call_original
+      view.results(1, 0)
+    end
+    it 'performs the pagination' do
+      expect(view).to receive(:paginate).with(anything, 2, 10).and_call_original
+      view.results(2, 10)
+    end
+    it 'skips the pagination if the page size is 0' do
+      expect(view).not_to receive(:paginate)
+      view.results(1, 0)
+    end
+    it 'applies the selected filters' do
+      expect(view).to receive(:filter_results).and_call_original
+      view.results(1, 0)
+    end
+    it 'groups the results according to the configuration' do
+      expect(view).to receive(:group_query).and_call_original
+      view.results(1, 0)
+    end
+    it 'searches distinct results if the uniqueness flag is enabled' do
+      view.update uniqueness: true
+      expect_any_instance_of(ActiveRecord::Relation).to receive(:distinct)
+      view.results(1, 0)
+    end
+    it 'allows duplications if the uniqueness flag is disabled' do
+      view.update uniqueness: false
+      expect_any_instance_of(ActiveRecord::Relation).not_to receive(:distinct)
+      view.results(1, 0)
+    end
+  end
 end
