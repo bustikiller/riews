@@ -123,6 +123,12 @@ describe Riews::View, type: :model do
     it 'bases the query on the model of the view' do
       expect(view.results(1, 0).table_name).to eq 'my_models'
     end
+    it 'scopes the search to the accessible records if ability is present' do
+      ability = Object.new
+      allow(view.klass).to receive(:accessible_by){ view.klass.all }
+      expect(view.klass).to receive(:accessible_by).with(ability)
+      view.results(1, 0, ability)
+    end
     it 'performs the join operations' do
       expect(view).to receive(:join_relationships).and_call_original
       view.results(1, 0)
