@@ -62,7 +62,7 @@ module Riews
 
     def paginate(query, page, per_page)
       query = query.page(page)
-      query = query.per(per_page)
+      query.per(per_page)
     end
 
     def filter_results(original_query)

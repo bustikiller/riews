@@ -1,6 +1,11 @@
 require 'spec_helper'
 
 describe Riews::View, type: :model do
+
+  class self::MyModel < ActiveRecord::Base
+  end
+  let(:test_class){ self.class::MyModel }
+
   describe 'validates' do
     subject { build :view, code: 'helloworld' }
     describe 'code' do
@@ -69,7 +74,7 @@ describe Riews::View, type: :model do
   end
 
   describe '#queried_columns_db_identifiers' do
-    it 'returms an empty list if the view has no columns' do
+    it 'returns an empty list if the view has no columns' do
       expect(build(:view).queried_column_db_identifiers).to be_empty
     end
     it 'returns an empty view if no column has method' do
@@ -86,11 +91,24 @@ describe Riews::View, type: :model do
     end
   end
 
-  describe '#results' do
-    class self::MyModel < ActiveRecord::Base
+  describe '#paginate' do
+    let(:view){ build :view, model: test_class.name }
+    let(:query) { test_class.all }
+    it 'calls returns an ActiveRecord::Relation object' do
+      expect(view.send :paginate, query, 2, 10).to be_an ActiveRecord::Relation
     end
+    it 'calls #page with the page number and #per with the page size' do
+      %i(page per).each{ |method| allow(query).to receive(method){ query } }
 
-    let(:test_class){ self.class::MyModel }
+      expect(query).to receive(:page).with(2)
+      expect(query).to receive(:per).with(10)
+
+      view.send :paginate, query, 2, 10
+    end
+  end
+
+  describe '#results' do
+
     let(:view) { create :view, model: test_class.name }
 
     it 'returns an ActiveRecord::Relation' do
