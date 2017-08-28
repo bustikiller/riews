@@ -94,4 +94,74 @@ describe Riews::View, type: :model do
       expect(column.replacement_info[:description]).to eq 'Value of the column "My custom name"'
     end
   end
+
+  describe '#db_column' do
+    it 'returns a sum statement when the aggregation function is sum' do
+      column = build :column, method: 'age', aggregate: Riews::Column.functions[:sum]
+      expect(column.db_column).to eq 'SUM(age)'
+    end
+    it 'returns a max statement when the aggregation function is max' do
+      column = build :column, method: 'age', aggregate: Riews::Column.functions[:max]
+      expect(column.db_column).to eq 'MAX(age)'
+    end
+    it 'returns a min statement when the aggregation function is min' do
+      column = build :column, method: 'age', aggregate: Riews::Column.functions[:min]
+      expect(column.db_column).to eq 'MIN(age)'
+    end
+    it 'returns a avg statement when the aggregation function is avg' do
+      column = build :column, method: 'age', aggregate: Riews::Column.functions[:avg]
+      expect(column.db_column).to eq 'AVG(age)'
+    end
+    it 'returns a count statement when the aggregation function is count' do
+      column = build :column, method: 'age', aggregate: Riews::Column.functions[:count]
+      expect(column.db_column).to eq 'COUNT(*)'
+    end
+    it 'returns the method as string if the aggregation function is group' do
+      column = build :column, method: 'age', aggregate: Riews::Column.functions[:group]
+      expect(column.db_column).to eq 'age'
+    end
+    it 'returns the method as a symbol if the aggregation function is not valid' do
+      column = build :column, method: 'age', aggregate: 45
+      expect(column.db_column).to eq :age
+    end
+    it 'returns the method as a symbol if the aggregation function is not present' do
+      column = build :column, method: 'age'
+      expect(column.db_column).to eq :age
+    end
+    it 'returns nil if the column has no method' do
+      column = build :column
+      expect(column.db_column).to eq nil
+    end
+  end
+
+  describe '#aggregation_keys' do
+    it 'returns a list of keys of the different aggregation functions available' do
+      expect(Riews::Column.aggregation_keys).to contain_exactly *(0..5).to_a
+    end
+  end
+
+  describe '#function_names' do
+    it 'returns a hash with the function code as key, and the uppercase name as value' do
+      expect(Riews::Column.function_names).to eq ({
+          0 => 'GROUP',
+          1 => 'SUM',
+          2 => 'MAX',
+          3 => 'MIN',
+          4 => 'AVG',
+          5 => 'COUNT'
+      })
+    end
+  end
+
+  describe '#functions_info' do
+    it 'should be private' do
+      expect(Riews::Column.private_methods).to include :functions_info
+    end
+  end
+
+  describe '#functions' do
+    it 'returns a hash with the column name as a downcased symbol and the code as the value' do
+      expect(Riews::Column.functions).to eq ({group: 0, sum: 1, max: 2, min: 3, avg: 4, count: 5})
+    end
+  end
 end

@@ -15,10 +15,7 @@ module Riews
 
     def results(page, per_page)
       query = klass.all
-      if per_page > 0
-        query = query.page(page)
-        query = query.per(per_page)
-      end
+      query = paginate(query, page, per_page) if per_page > 0
       query = join_relationships query
       query = filter_results query
       query = group_query query
@@ -62,6 +59,11 @@ module Riews
     end
 
     private
+
+    def paginate(query, page, per_page)
+      query = query.page(page)
+      query.per(per_page)
+    end
 
     def filter_results(original_query)
       filter_criterias.inject(original_query){|composed_query, filter| filter.apply_to composed_query }
