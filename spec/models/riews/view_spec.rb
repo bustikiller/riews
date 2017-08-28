@@ -4,7 +4,13 @@ describe Riews::View, type: :model do
 
   class self::MyModel < ActiveRecord::Base
   end
+
+  class self::MySubModel < ActiveRecord::Base
+    belongs_to :my_model, class_name: 'self::MyModel'
+  end
+
   let(:test_class){ self.class::MyModel }
+  let(:test_subclass){ self.class::MySubModel }
 
   describe 'validates' do
     subject { build :view, code: 'helloworld' }
@@ -146,6 +152,17 @@ describe Riews::View, type: :model do
       view.update uniqueness: false
       expect_any_instance_of(ActiveRecord::Relation).not_to receive(:distinct)
       view.results(1, 0)
+    end
+  end
+
+  describe '#available_reflections' do
+    it 'returns an empty list if the model is not present' do
+      view = build :view, model: nil
+      expect(view.available_reflections).to be_empty
+    end
+    it 'returns a list with the keys of the reflections hash' do
+      view = build :view, model: test_subclass.name
+      expect(view.available_reflections).to contain_exactly 'my_model'
     end
   end
 end
