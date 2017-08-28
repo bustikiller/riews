@@ -49,7 +49,8 @@ module Riews
     private
 
     def get_affected_models(view, page)
-      view.results(page, view.paginator_size)
+      ability = respond_to?(:current_ability) ? current_ability : nil
+      view.results(page, view.paginator_size, ability)
     end
 
     def render_view_rows(page, view)

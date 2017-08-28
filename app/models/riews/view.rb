@@ -13,8 +13,8 @@ module Riews
 
     before_create :set_default_values
 
-    def results(page, per_page)
-      query = klass.all
+    def results(page, per_page, ability=nil)
+      query = ability ? klass.accessible_by(ability) : klass.all
       query = paginate(query, page, per_page) if per_page > 0
       query = join_relationships query
       query = filter_results query
