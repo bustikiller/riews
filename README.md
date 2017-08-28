@@ -13,7 +13,7 @@ How to use my plugin.
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'riews'
+gem 'riews', git: 'https://github.com/bustikiller/riews'
 ```
 
 And then execute:
@@ -26,13 +26,20 @@ Or install it yourself as:
 $ gem install riews
 ```
 
-Make sure your application is eager loading the code in the desired environments:
+Please, take into account that there is no stable release yet.
+
+### Mounting the routes
+Add this line to your application's routes file:
 ```ruby
-  config.eager_load = true
+mount Riews::Engine, at: '/riews', as: :riews
 ```
 
-## Contributing
-Contribution directions go here.
+### Executing the migrations
+Import and execute the migrations:
+```bash
+rake riews:install:migrations
+rake db:migrate
+```
 
 ## License
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
