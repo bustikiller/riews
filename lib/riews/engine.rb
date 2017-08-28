@@ -5,6 +5,8 @@ module Riews
     require 'kaminari'
     require 'cocoon'
 
+    config.autoload_paths << File.expand_path('../lib', __FILE__)
+
     initializer 'riews.action_controller' do |app|
       ActiveSupport.on_load :action_controller do
         helper Riews::ViewsHelper
