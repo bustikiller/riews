@@ -10,7 +10,6 @@ gem 'rails_bootstrap_navbar'
 gem 'kaminari'
 gem 'cocoon', '~>1.2.10'
 gem 'dentaku'
-gem 'acts_as_list'
 gem 'bh'
 
 group :development, :test do

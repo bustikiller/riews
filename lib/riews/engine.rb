@@ -4,7 +4,6 @@ module Riews
 
     require 'kaminari'
     require 'cocoon'
-    require 'acts_as_list'
 
     config.autoload_paths << File.expand_path('../lib', __FILE__)
 
