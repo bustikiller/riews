@@ -43,7 +43,13 @@ module Riews
     end
 
     def available_columns_for_select(view)
-      view.available_columns.group_by{|c| c.split('.').size > 1 ? c.split('.').first : view.klass.table_name}
+      result = view.available_columns.group_by{|c| c.split('.').size > 1 ? c.split('.').first : view.klass.table_name}
+      result.each.map do |table, column_names|
+        [
+            table,
+            column_names.map {|column_name| [column_name, table.classify.constantize.human_attribute_name(column_name)]}
+        ]
+      end.to_h
     end
 
     private
