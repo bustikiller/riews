@@ -7,6 +7,10 @@ module Riews
         table.headers = view.columns.displayed.map(&:displayed_name)
         table.rows = render_view_rows(page, view)
       end
+    rescue ActiveRecord::StatementInvalid
+      panel_with_body title: 'SQL error' do
+        content_tag :span, 'An error occurred executing the SQL statement. Please, review your configuration'
+      end
     end
 
     def generate_view_paginator_for(view, page=1)
