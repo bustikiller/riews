@@ -4,8 +4,10 @@
         <%= content_tag :div, class: 'col-md-6' do %>
             <%= f.input :field_name,
                         as: :grouped_select,
-                        collection: available_columns_for_select(f.object.view), :group_method => :last,
-                        value_method: :downcase,
+                        collection: available_columns_for_select(f.object.view),
+                        :group_method => :last,
+                        value_method: :first,
+                        label_method: :last,
                         wrapper_html: { class: 'col-md-12' } %>
             <%= f.input :operator,
                         as: :select,

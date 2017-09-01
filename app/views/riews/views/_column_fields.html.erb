@@ -3,7 +3,8 @@
         <%= f.input :method,
                     as: :grouped_select,
                     collection: available_columns_for_select(f.object.view), :group_method => :last,
-                    value_method: :downcase,
+                    value_method: :first,
+                    label_method: :last,
                     wrapper_html: { class: 'col-md-6' } %>
         <%= f.input :name, wrapper_html: { class: 'col-md-6' } %>
         <%= f.input :prefix, wrapper_html: { class: 'col-md-6' } %>
