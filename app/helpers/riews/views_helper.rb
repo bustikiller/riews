@@ -76,13 +76,14 @@ module Riews
         else
           Riews::ColumnPattern.new(column.pattern).format(original_row)
                       end
-        safe_join [row_content, generate_links_for_column(column)]
+        safe_join [row_content, generate_links_for_column(column, original_row)]
       end
     end
 
-    def generate_links_for_column(column)
+    def generate_links_for_column(column, original_row)
       column.action_links.map do |action_link|
-        link_to action_link.display_pattern, action_link.base_path
+        link_name = Riews::ColumnPattern.new(action_link.display_pattern).format(original_row)
+        link_to link_name, action_link.base_path
       end.inject(:+)
     end
   end
