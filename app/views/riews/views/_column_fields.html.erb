@@ -1,5 +1,6 @@
 <%= panel class: 'form-inline col-md-12' do %>
     <%= content_tag :div, class: 'nested-fields' do %>
+        <%= alert_box f.error(:base), context: :danger if f.error(:base).present? %>
         <%= f.input :method,
                     as: :grouped_select,
                     collection: available_columns_for_select(f.object.view), :group_method => :last,
