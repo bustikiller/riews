@@ -2,6 +2,7 @@ module Riews
   class Column < ApplicationRecord
 
     has_many :action_links, foreign_key: 'riews_column_id', dependent: :destroy, inverse_of: :riews_column
+    accepts_nested_attributes_for :action_links, reject_if: :all_blank, allow_destroy: true
 
     def self.functions_info
       {
