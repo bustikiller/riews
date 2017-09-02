@@ -70,7 +70,7 @@ module Riews
 
     def render_single_row(columns, row)
       original_row = row.dup
-      columns.displayed.map do |column|
+      columns.displayed.includes(:action_links).map do |column|
         row_content = if column.method.present? then
           column.format(row.shift.last)
         else
