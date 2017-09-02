@@ -71,12 +71,19 @@ module Riews
     def render_single_row(columns, row)
       original_row = row.dup
       columns.displayed.map do |column|
-        if column.method.present? then
+        row_content = if column.method.present? then
           column.format(row.shift.last)
         else
           Riews::ColumnPattern.new(column.pattern).format(original_row)
-        end
+                      end
+        safe_join [row_content, generate_links_for_column(column)]
       end
+    end
+
+    def generate_links_for_column(column)
+      column.action_links.map do |action_link|
+        link_to action_link.display_pattern, action_link.base_path
+      end.inject(:+)
     end
   end
 end
