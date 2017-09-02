@@ -83,7 +83,7 @@ describe Riews::View, type: :model do
     it 'returns an empty list if the view has no columns' do
       expect(build(:view).queried_column_db_identifiers).to be_empty
     end
-    it 'returns an empty view if no column has method' do
+    it 'returns an empty list if no column has method' do
       view = create :view
       create :column, view: view, method: nil, pattern: 'whatever'
       expect(view.queried_column_db_identifiers).to be_empty

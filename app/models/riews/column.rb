@@ -38,11 +38,9 @@ module Riews
     delegate :available_columns, to: :view
 
     validates_presence_of :view
-    validates :method, allow_nil: true,
-              inclusion:  {in: proc{ |column| column.available_columns }},
-              unless: proc{ |column| column.pattern.present? }
-    validates :aggregate, inclusion: { in: aggregation_keys + [nil] }
-    validate :method_xor_pattern
+    validates :method, inclusion:  {in: proc{ |column| column.available_columns }}, allow_blank: true
+    validates :aggregate, inclusion: { in: aggregation_keys }, allow_nil: true
+    validate :column_with_single_purpose
 
     scope :with_method, -> { where.not method: [nil, ''] }
     scope :displayed, -> { where hide_from_display: false }
@@ -74,9 +72,14 @@ module Riews
 
     private
 
-    def method_xor_pattern
-      unless method.blank? ^ pattern.blank?
-        errors.add(:base, 'Specify a method or a pattern, not both')
+    def column_with_single_purpose
+      method_column = method.present?
+      pattern_column = pattern.present?
+      links_column = action_links.any?
+
+      purposes = [method_column, pattern_column, links_column]
+      if purposes.combination(2).any?{ |combination| combination.inject(:&) }
+        errors.add(:base, 'A single column can only have a method, a pattern, or links')
       end
     end
   end
