@@ -1,6 +1,8 @@
 module Riews
   class Column < ApplicationRecord
 
+    has_many :action_links, foreign_key: 'riews_column_id', dependent: :destroy, inverse_of: :riews_column
+
     def self.functions_info
       {
           group: { code: 0, name: 'GROUP', function: Proc.new { |column| column } },
