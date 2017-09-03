@@ -68,7 +68,8 @@ module Riews
                     .with_method
                     .map {|column| {"[[column:#{column.id}]]" => column.replacement_info}}
                     .inject(:merge) || {}
-      tokens['[[calc:(3+5)]]'] = {description: 'Value of the sum of 3 and 5. Other replacement tokens may be used inside this pattern'}
+      tokens['[[icon:<glyphicon>]]'] = {description: 'An icon of a user. Visit glyphicons.com to see the available icons'}
+      tokens['[[calc:(<math expression>)]]'] = {description: 'Value of the evaluation of the math expression between parentheses. Other replacement tokens may be used inside this pattern'}
       tokens
     end
 

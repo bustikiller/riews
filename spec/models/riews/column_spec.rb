@@ -82,9 +82,13 @@ describe Riews::View, type: :model do
 
   describe '#replacement_tokens'do
     let(:view){ build :view }
-    it 'returns the calculations pattern if the view has no persisted columns' do
+    it 'contains the calculations pattern' do
       column = build :column, view: view
-      expect(column.replacement_tokens.keys).to contain_exactly '[[calc:(3+5)]]'
+      expect(column.replacement_tokens.keys).to include '[[calc:(<math expression>)]]'
+    end
+    it 'contains the icons pattern' do
+      column = build :column, view: view
+      expect(column.replacement_tokens.keys).to include '[[icon:<glyphicon>]]'
     end
     it 'returns a hash with the column ids as key in the format [[column:45]]' do
       allow(view).to receive(:available_columns){ %w(one two three) }
@@ -104,7 +108,7 @@ describe Riews::View, type: :model do
       allow(view).to receive(:available_columns){ %w(one two three) }
       column1 = create :column, view: view, method: 'one'
       column2 = create :column, view: view, pattern: 'This is a sample pattern'
-      expect(column2.replacement_tokens.keys).to contain_exactly "[[column:#{column1.id}]]", '[[calc:(3+5)]]'
+      expect(column2.replacement_tokens.keys).not_to include "[[column:#{column2.id}]]"
     end
 
     it 'calls the method #replacement_info for the details of the replacement' do
