@@ -1,5 +1,6 @@
 <%= panel class: 'form-inline col-md-12' do %>
     <%= content_tag :div, class: 'nested-fields' do %>
+        <%= alert_box f.error(:base), context: :danger if f.error(:base).present? %>
         <%= f.input :method,
                     as: :grouped_select,
                     collection: available_columns_for_select(f.object.view), :group_method => :last,
@@ -20,6 +21,15 @@
                     as: :text,
                     wrapper_html: { class: 'col-md-12' },
                     hint: 'Fill this field if you want to combine the result of several columns' %>
+        <%= panel_with_body title: 'Links', id: 'action_links', class: 'col-md-12' do %>
+            <%= f.fields_for :action_links do |ff| %>
+                <%= render 'action_link_fields', f: ff %>
+            <% end %>
+            <%= content_tag :div do %>
+                <%= link_to_add_association 'Add link', f, :action_links, class: 'col-md-12' %>
+            <% end %>
+        <% end %>
+
         <%=  panel_with_body title: 'Available replacement patterns', class: 'col-md-12'  do
           format_replacement_tokens f.object.replacement_tokens
         end %>

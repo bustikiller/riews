@@ -7,23 +7,52 @@ describe Riews::View, type: :model do
       it { should belong_to(:riews_view) }
     end
 
+    let(:view) do
+      new_view = build :view
+      allow(new_view).to receive(:available_columns){ %w(one two three) }
+      new_view
+    end
+
     describe 'method' do
-      let(:view) do
-        new_view = build :view
-        allow(new_view).to receive(:available_columns){ %w(one two three) }
-        new_view
-      end
       it 'is valid if it is contained in the available columns' do
         expect(build :column, view: view, method: 'one').to be_valid
       end
       it 'is invalid if it is not contained in the available columns' do
         expect(build :column, view: view, method: 'four').not_to be_valid
       end
-      it 'is required if the pattern is not present' do
-        expect(build :column, view: view, method: nil).not_to be_valid
-      end
-      it 'is forbidden if the pattern is present' do
+    end
+
+    describe 'column role' do
+      it 'cannot have both method and pattern' do
         expect(build :column, view: view, method: 'one', pattern: 'helloworld').not_to be_valid
+      end
+      it 'cannot have both pattern and links' do
+        column = build :column, view: view, pattern: 'helloworld'
+        column.action_links.build
+        expect(column).not_to be_valid
+      end
+      it 'cannot have both method and links' do
+        column = build :column, view: view, method: 'one'
+        column.action_links.build
+        expect(column).not_to be_valid
+      end
+      it 'cannot have method, pattern and links' do
+        column = build :column, view: view, method: 'one', pattern: 'helloworld'
+        column.action_links.build
+        expect(column).not_to be_valid
+      end
+      it 'can have just method' do
+        expect(build :column, view: view, method: 'one').to be_valid
+      end
+
+      it 'can have just pattern' do
+        expect(build :column, view: view, pattern: 'helloworld').to be_valid
+      end
+
+      it 'can have just links' do
+        column = build :column, view: view
+        column.action_links.build
+        expect(column).to be_valid
       end
     end
   end

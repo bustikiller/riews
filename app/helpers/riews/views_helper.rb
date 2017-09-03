@@ -70,13 +70,21 @@ module Riews
 
     def render_single_row(columns, row)
       original_row = row.dup
-      columns.displayed.map do |column|
-        if column.method.present? then
+      columns.displayed.includes(:action_links).map do |column|
+        row_content = if column.method.present? then
           column.format(row.shift.last)
         else
           Riews::ColumnPattern.new(column.pattern).format(original_row)
-        end
+                      end
+        safe_join [row_content, generate_links_for_column(column, original_row)]
       end
+    end
+
+    def generate_links_for_column(column, original_row)
+      column.action_links.map do |action_link|
+        link_name = Riews::ColumnPattern.new(action_link.display_pattern).format(original_row)
+        link_to link_name, action_link.base_path
+      end.inject(:+)
     end
   end
 end
