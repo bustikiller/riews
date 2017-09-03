@@ -4,7 +4,7 @@ module Riews
     alias_method :column, :riews_column
     alias_method :column=, :riews_column=
 
-    has_many :arguments, as: :argumentable, dependent: :destroy
+    has_many :arguments, as: :argumentable, inverse_of: :argumentable, dependent: :destroy
     accepts_nested_attributes_for :arguments, reject_if: :all_blank, allow_destroy: true
 
     validates_presence_of :base_path, :display_pattern
