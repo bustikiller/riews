@@ -4,6 +4,7 @@
                     class: 'form-inline col-md-12 sortable-item' do %>
     <%= content_tag :div, class: 'nested-fields' do %>
         <%= display_base_error_messages f %>
+        <%= f.input :position, as: :hidden, input_html: { class: 'position' } %>
         <%= f.input :method,
                     as: :grouped_select,
                     collection: available_columns_for_select(f.object.view), :group_method => :last,

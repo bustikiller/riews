@@ -62,7 +62,7 @@ module Riews
       filter_criteria_attributes = [:field_name, :operator, :negation, :id, :_destroy,
                                     arguments_attributes: argument_attributes]
       column_attributes = [:id, :_destroy, :method, :prefix, :postfix, :aggregate, :name, :pattern, :hide_from_display,
-                           action_links_attributes: action_link_attributes]
+                           :position, action_links_attributes: action_link_attributes]
       relationship_attributes = [:id, :_destroy, :name]
       params.require(:view).permit(:name, :model, :code, :uniqueness, :paginator_size,
                                    columns_attributes: column_attributes,
