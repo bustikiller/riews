@@ -64,10 +64,12 @@ module Riews
     end
 
     def replacement_tokens
-      view.columns
-          .with_method
-          .map{ |column| { "[[column:#{column.id}]]" => column.replacement_info }}
-          .inject(:merge) || {}
+      tokens  = view.columns
+                    .with_method
+                    .map {|column| {"[[column:#{column.id}]]" => column.replacement_info}}
+                    .inject(:merge) || {}
+      tokens['[[calc:(3+5)]]'] = {description: 'Value of the sum of 3 and 5. Other replacement tokens may be used inside this pattern'}
+      tokens
     end
 
     private
