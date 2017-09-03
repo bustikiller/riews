@@ -15,7 +15,6 @@ ActiveRecord::Schema.define(version: 20170903000001) do
   create_table "riews_action_links", force: :cascade do |t|
     t.string "base_path"
     t.string "display_pattern"
-    t.boolean "absolute", default: false, null: false
     t.integer "riews_column_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -27,6 +26,7 @@ ActiveRecord::Schema.define(version: 20170903000001) do
     t.integer "argumentable_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "position", default: 0, null: false
     t.string "argumentable_type"
     t.index ["argumentable_id"], name: "index_riews_arguments_on_argumentable_id"
   end
@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(version: 20170903000001) do
     t.string "name"
     t.string "pattern"
     t.boolean "hide_from_display", default: false
+    t.integer "position", default: 0, null: false
     t.index ["riews_view_id"], name: "index_riews_columns_on_riews_view_id"
   end
 
@@ -52,6 +53,7 @@ ActiveRecord::Schema.define(version: 20170903000001) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "negation", default: false, null: false
+    t.integer "position", default: 0, null: false
     t.index ["riews_view_id"], name: "index_riews_filter_criterias_on_riews_view_id"
   end
 
@@ -60,6 +62,7 @@ ActiveRecord::Schema.define(version: 20170903000001) do
     t.integer "riews_view_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "position", default: 0, null: false
     t.index ["riews_view_id"], name: "index_riews_relationships_on_riews_view_id"
   end
 

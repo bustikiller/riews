@@ -1,8 +1,8 @@
 module Riews
   class View < ApplicationRecord
-    has_many :columns, foreign_key: 'riews_view_id', dependent: :destroy
-    has_many :filter_criterias, foreign_key: 'riews_view_id', dependent: :destroy
-    has_many :relationships, foreign_key: 'riews_view_id', dependent: :destroy
+    has_many :columns, -> { order(position: :asc) }, foreign_key: 'riews_view_id', dependent: :destroy
+    has_many :filter_criterias, -> { order(position: :asc) }, foreign_key: 'riews_view_id', dependent: :destroy
+    has_many :relationships, -> { order(position: :asc) }, foreign_key: 'riews_view_id', dependent: :destroy
 
     accepts_nested_attributes_for :columns, :filter_criterias, :relationships, reject_if: :all_blank, allow_destroy: true
 

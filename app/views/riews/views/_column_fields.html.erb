@@ -1,6 +1,10 @@
-<%= panel class: 'form-inline col-md-12' do %>
+<%= panel_with_body title: f.object.displayed_name,
+                    collapsible: true,
+                    icon: {type: :move, class: 'sort-handler'},
+                    class: 'form-inline col-md-12 sortable-item' do %>
     <%= content_tag :div, class: 'nested-fields' do %>
         <%= display_base_error_messages f %>
+        <%= f.input :position, as: :hidden, input_html: { class: 'position' } %>
         <%= f.input :method,
                     as: :grouped_select,
                     collection: available_columns_for_select(f.object.view), :group_method => :last,
@@ -30,7 +34,7 @@
             <% end %>
         <% end %>
 
-        <%=  panel_with_body title: 'Available replacement patterns', class: 'col-md-12'  do
+        <%=  panel_with_body title: 'Available replacement patterns', collapsible: true, class: 'col-md-12'  do
           format_replacement_tokens f.object.replacement_tokens
         end %>
         <%= link_to_remove_association 'Remove column', f, class: 'col-md-12' %>
