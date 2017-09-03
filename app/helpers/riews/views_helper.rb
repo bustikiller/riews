@@ -72,20 +72,21 @@ module Riews
       original_row = row.dup
       columns.displayed.includes(:action_links).map do |column|
         row_content = if column.method.present? then
-          column.format(row[column.id])
-        else
-          Riews::ColumnPattern.new(column.pattern).format(original_row)
+                        column.format(row[column.id])
+                      else
+                        sanitize(Riews::ColumnPattern.new(column.pattern).format(original_row))
                       end
         safe_join [row_content, generate_links_for_column(column, original_row)]
       end
     end
 
     def generate_links_for_column(column, original_row)
-      column.action_links.map do |action_link|
-        link_name = Riews::ColumnPattern.new(action_link.display_pattern).format(original_row)
-        link_target = action_link.base_path_with_replacements(original_row)
+      links = column.action_links.map do |action_link|
+        link_name = sanitize(Riews::ColumnPattern.new(action_link.display_pattern).format(original_row))
+        link_target = sanitize(action_link.base_path_with_replacements(original_row))
         link_to link_name, link_target
-      end.inject(:+)
+      end
+      safe_join links
     end
   end
 end

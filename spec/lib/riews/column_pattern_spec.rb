@@ -34,6 +34,13 @@ describe Riews::ColumnPattern do
       replacements = { 45 => 'wonderful' }
       pattern.format replacements
     end
+
+    it 'calls the method #replace_glyphicons with the result of the replacements' do
+      pattern = Riews::ColumnPattern.new('Hello [[column:45]] world')
+      expect(pattern.class).to receive(:replace_glyphicons).with('Hello wonderful world')
+      replacements = { 45 => 'wonderful' }
+      pattern.format replacements
+    end
   end
 
   describe '#apply_math_operations' do
@@ -48,6 +55,12 @@ describe Riews::ColumnPattern do
     end
     it 'returns [MATH ERROR] if the operation returns any error' do
       expect(Riews::ColumnPattern.apply_math_operations('[[calc:(3/0)]]')).to eq '[MATH ERROR]'
+    end
+  end
+
+  describe '#replace_glyphicons' do
+    it 'uses BH gem to render a glyphicon of a user' do
+      expect(Riews::ColumnPattern.replace_glyphicons('[[icon:user]]')).to eq '<span class="glyphicon glyphicon-user"></span>'
     end
   end
 end

@@ -64,10 +64,13 @@ module Riews
     end
 
     def replacement_tokens
-      view.columns
-          .with_method
-          .map{ |column| { "[[column:#{column.id}]]" => column.replacement_info }}
-          .inject(:merge) || {}
+      tokens  = view.columns
+                    .with_method
+                    .map {|column| {"[[column:#{column.id}]]" => column.replacement_info}}
+                    .inject(:merge) || {}
+      tokens['[[icon:<glyphicon>]]'] = {description: 'An icon of a user. Visit glyphicons.com to see the available icons'}
+      tokens['[[calc:(<math expression>)]]'] = {description: 'Value of the evaluation of the math expression between parentheses. Other replacement tokens may be used inside this pattern'}
+      tokens
     end
 
     private

@@ -82,14 +82,18 @@ describe Riews::View, type: :model do
 
   describe '#replacement_tokens'do
     let(:view){ build :view }
-    it 'returns an empty hash if the view has no persisted columns' do
+    it 'contains the calculations pattern' do
       column = build :column, view: view
-      expect(column.replacement_tokens).to be_empty
+      expect(column.replacement_tokens.keys).to include '[[calc:(<math expression>)]]'
+    end
+    it 'contains the icons pattern' do
+      column = build :column, view: view
+      expect(column.replacement_tokens.keys).to include '[[icon:<glyphicon>]]'
     end
     it 'returns a hash with the column ids as key in the format [[column:45]]' do
       allow(view).to receive(:available_columns){ %w(one two three) }
       column = create :column, view: view, method: 'one'
-      expect(column.replacement_tokens.keys).to contain_exactly "[[column:#{column.id}]]"
+      expect(column.replacement_tokens.keys).to include "[[column:#{column.id}]]"
     end
 
     it 'returns a hash with the column ids as key in the format [[column:45]] with several columns' do
@@ -97,14 +101,14 @@ describe Riews::View, type: :model do
       column1 = create :column, view: view, method: 'one'
       column2 = create :column, view: view, method: 'two'
       expect(column2.replacement_tokens.keys)
-          .to contain_exactly "[[column:#{column1.id}]]", "[[column:#{column2.id}]]"
+          .to include "[[column:#{column1.id}]]", "[[column:#{column2.id}]]"
     end
 
     it 'excludes the columns that have a pattern' do
       allow(view).to receive(:available_columns){ %w(one two three) }
       column1 = create :column, view: view, method: 'one'
       column2 = create :column, view: view, pattern: 'This is a sample pattern'
-      expect(column2.replacement_tokens.keys).to contain_exactly "[[column:#{column1.id}]]"
+      expect(column2.replacement_tokens.keys).not_to include "[[column:#{column2.id}]]"
     end
 
     it 'calls the method #replacement_info for the details of the replacement' do
@@ -112,7 +116,7 @@ describe Riews::View, type: :model do
       column = create :column, view: view, method: 'one'
       info = { lorem: 'Ipsum' }
       allow_any_instance_of(Riews::Column).to receive(:replacement_info){info}
-      expect(column.replacement_tokens.values).to contain_exactly info
+      expect(column.replacement_tokens.values).to include info
     end
   end
 
