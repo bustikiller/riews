@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170903000001) do
+ActiveRecord::Schema.define(version: 20170903000002) do
 
   create_table "riews_action_links", force: :cascade do |t|
     t.string "base_path"
@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(version: 20170903000001) do
     t.integer "riews_column_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "http_verb", limit: 1, default: 0, null: false
     t.index ["riews_column_id"], name: "index_riews_action_links_on_riews_column_id"
   end
 
