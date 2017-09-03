@@ -2,7 +2,13 @@
     <%= f.input :display_pattern,
                 as: :text,
                 wrapper_html: { class: 'col-md-6' } %>
-    <%= f.input :base_path, wrapper_html: { class: 'col-md-6' } %>
+    <%= f.input :base_path, wrapper_html: { class: 'col-md-6 base-path' } %>
 
+    <%= content_tag :div, class: 'col-md-6 form-group' do %>
+        <%= label_tag 'Available routes' %>
+        <%= select_tag :available_routes,
+                       options_for_select(available_routes),
+                       include_blank: true %>
+    <% end %>
     <%= link_to_remove_association 'Remove link', f, class: 'col-md-12' %>
 <% end %>
