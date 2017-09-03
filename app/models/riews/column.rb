@@ -75,7 +75,7 @@ module Riews
     def column_with_single_purpose
       method_column = method.present?
       pattern_column = pattern.present?
-      links_column = action_links.any?
+      links_column = action_links.reject(&:marked_for_destruction?).size != 0
 
       purposes = [method_column, pattern_column, links_column]
       if purposes.combination(2).any?{ |combination| combination.inject(:&) }
