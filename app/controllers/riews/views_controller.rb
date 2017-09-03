@@ -58,7 +58,7 @@ module Riews
     # Only allow a trusted parameter "white list" through.
     def view_params
       argument_attributes = [:value, :id, :_destroy]
-      action_link_attributes = [:id, :_destroy, :base_path, :display_pattern, arguments_attributes: argument_attributes]
+      action_link_attributes = [:id, :_destroy, :base_path, :display_pattern, :http_verb, arguments_attributes: argument_attributes]
       filter_criteria_attributes = [:field_name, :operator, :negation, :id, :_destroy,
                                     arguments_attributes: argument_attributes]
       column_attributes = [:id, :_destroy, :method, :prefix, :postfix, :aggregate, :name, :pattern, :hide_from_display,

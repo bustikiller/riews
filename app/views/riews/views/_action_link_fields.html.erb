@@ -4,7 +4,6 @@
                 as: :text,
                 wrapper_html: { class: 'col-md-4' } %>
     <%= content_tag :div, class: 'col-md-4' do %>
-        <%= f.input :base_path, wrapper_html: { class: 'col-md-12 base-path' } %>
 
         <%= content_tag :div, class: 'col-md-12 form-group' do %>
             <%= label_tag 'Available routes' %>
@@ -12,6 +11,15 @@
                            options_for_select(available_routes),
                            include_blank: true %>
         <% end %>
+
+        <%= f.input :base_path, wrapper_html: { class: 'col-md-12 base-path' } %>
+        <%= f.input :http_verb,
+                    as: :select,
+                    collection: http_verbs,
+                    value_method: :last,
+                    label_method: :first,
+                    required: true,
+                    wrapper_html: { class: 'col-md-12' } %>
     <% end %>
 
     <%= content_tag :div, class: 'col-md-4' do %>

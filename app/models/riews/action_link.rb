@@ -13,11 +13,22 @@ module Riews
     validates_presence_of :base_path, :display_pattern
     validate :validate_number_of_parameters
 
+    def self.http_verbs
+      {
+          get: {code: 0, name: 'GET'},
+          delete: {code: 1, name: 'DELETE'}
+      }
+    end
+
     def base_path_with_replacements(original_row=[])
       arguments.inject(base_path) do |base, argument|
         rendered_argument_value = Riews::ColumnPattern.new(argument.value).format(original_row)
         base.sub(PARAMETER_REGEX, "/#{rendered_argument_value}")
       end.gsub(OPTIONAL_PARAMETER_REGEX, '')
+    end
+
+    def delete_link?
+      http_verb == self.class.http_verbs[:delete][:code]
     end
 
     private
