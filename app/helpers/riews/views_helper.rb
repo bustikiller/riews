@@ -83,7 +83,7 @@ module Riews
     def generate_links_for_column(column, original_row)
       column.action_links.map do |action_link|
         link_name = Riews::ColumnPattern.new(action_link.display_pattern).format(original_row)
-        link_target = action_link.base_path_with_replacements
+        link_target = action_link.base_path_with_replacements(original_row)
         link_to link_name, link_target
       end.inject(:+)
     end

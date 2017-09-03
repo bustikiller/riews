@@ -13,9 +13,10 @@ module Riews
     validates_presence_of :base_path, :display_pattern
     validate :validate_number_of_parameters
 
-    def base_path_with_replacements
+    def base_path_with_replacements(original_row=[])
       arguments.inject(base_path) do |base, argument|
-        base.sub(PARAMETER_REGEX, "/#{argument.value}")
+        rendered_argument_value = Riews::ColumnPattern.new(argument.value).format(original_row)
+        base.sub(PARAMETER_REGEX, "/#{rendered_argument_value}")
       end.gsub(OPTIONAL_PARAMETER_REGEX, '')
     end
 
