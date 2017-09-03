@@ -73,4 +73,29 @@ describe Riews::ActionLink, type: :model do
       end
     end
   end
+
+  describe '#base_path_with_replacements' do
+    it 'returns the original path if no arguments are present' do
+      action_link = build :action_link, base_path: 'www.example.com'
+      expect(action_link.base_path_with_replacements).to eq 'www.example.com'
+    end
+    it 'replaces an argument if present' do
+      action_link = build :action_link, base_path: 'www.example.com/items/:item_id'
+      action_link.arguments.build value: 1
+      expect(action_link.base_path_with_replacements).to eq 'www.example.com/items/1'
+    end
+    it 'replaces three arguments if present, one of them optional' do
+      action_link = build :action_link, base_path: 'www.example.com/:locale/items/:item_id/(:format)'
+      action_link.arguments.build value: 'es'
+      action_link.arguments.build value: '4'
+      action_link.arguments.build value: 'json'
+      expect(action_link.base_path_with_replacements).to eq 'www.example.com/es/items/4/json'
+    end
+    it 'clears the optional parameters if not present' do
+      action_link = build :action_link, base_path: 'www.example.com/:locale/items/:item_id/(:format)'
+      action_link.arguments.build value: 'es'
+      action_link.arguments.build value: '4'
+      expect(action_link.base_path_with_replacements).to eq 'www.example.com/es/items/4/'
+    end
+  end
 end

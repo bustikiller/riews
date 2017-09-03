@@ -1,5 +1,8 @@
 module Riews
   class ActionLink < ApplicationRecord
+    PARAMETER_REGEX = /\/\(?\:\w+\)?/.freeze
+    OPTIONAL_PARAMETER_REGEX = /\(\:\w+\)/
+
     belongs_to :riews_column, class_name: 'Riews::Column'
     alias_method :column, :riews_column
     alias_method :column=, :riews_column=
@@ -10,12 +13,19 @@ module Riews
     validates_presence_of :base_path, :display_pattern
     validate :validate_number_of_parameters
 
+    def base_path_with_replacements
+      arguments.inject(base_path) do |base, argument|
+        base.sub(PARAMETER_REGEX, "/#{argument.value}")
+      end.gsub(OPTIONAL_PARAMETER_REGEX, '')
+    end
+
     private
+
 
     def validate_number_of_parameters
       if base_path
-        total_parameter_count = base_path.scan(/[\/\(]\:\w+/).size
-        optional_parameter_count = base_path.scan(/\(\:\w+/).size
+        total_parameter_count = base_path.scan(PARAMETER_REGEX).size
+        optional_parameter_count = base_path.scan(OPTIONAL_PARAMETER_REGEX).size
 
         min_parameter_count = total_parameter_count - optional_parameter_count
         max_parameter_count = total_parameter_count
