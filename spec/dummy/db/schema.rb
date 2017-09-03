@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170902000000) do
+ActiveRecord::Schema.define(version: 20170903000001) do
 
   create_table "riews_action_links", force: :cascade do |t|
     t.string "base_path"
@@ -24,10 +24,11 @@ ActiveRecord::Schema.define(version: 20170902000000) do
 
   create_table "riews_arguments", force: :cascade do |t|
     t.string "value", null: false
-    t.integer "riews_filter_criteria_id"
+    t.integer "argumentable_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["riews_filter_criteria_id"], name: "index_riews_arguments_on_riews_filter_criteria_id"
+    t.string "argumentable_type"
+    t.index ["argumentable_id"], name: "index_riews_arguments_on_argumentable_id"
   end
 
   create_table "riews_columns", force: :cascade do |t|

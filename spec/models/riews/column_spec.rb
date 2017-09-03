@@ -51,7 +51,7 @@ describe Riews::View, type: :model do
 
       it 'can have just links' do
         column = build :column, view: view
-        column.action_links.build
+        column.action_links.build base_path: 'path', display_pattern: 'pattern'
         expect(column).to be_valid
       end
     end
