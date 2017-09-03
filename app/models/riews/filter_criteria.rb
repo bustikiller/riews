@@ -19,7 +19,7 @@ module Riews
     end
 
     belongs_to :riews_view, class_name: 'Riews::View'
-    has_many :arguments, foreign_key: 'riews_filter_criteria_id', dependent: :destroy, inverse_of: :riews_filter_criteria
+    has_many :arguments, as: :argumentable, inverse_of: :argumentable, dependent: :destroy
     accepts_nested_attributes_for :arguments, reject_if: :all_blank, allow_destroy: true
 
     alias_method :view, :riews_view
