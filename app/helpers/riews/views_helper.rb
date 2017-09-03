@@ -72,7 +72,7 @@ module Riews
       original_row = row.dup
       columns.displayed.includes(:action_links).map do |column|
         row_content = if column.method.present? then
-          column.format(row.shift.last)
+          column.format(row[column.id])
         else
           Riews::ColumnPattern.new(column.pattern).format(original_row)
                       end
