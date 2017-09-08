@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gemspec
 
-gem 'btgen', git: 'https://github.com/bustikiller/btgen'
+gem 'btgen', '~>0.1.1'
 
 gem 'jquery-ui-rails'
 gem 'bootstrap-sass'
