@@ -9,7 +9,7 @@ GIT
 PATH
   remote: .
   specs:
-    riews (0.1.0)
+    riews (0.1.2)
       bh (~> 1.3.6)
       btgen (~> 0.1.1)
       cocoon (~> 1.2.10)
