@@ -7,5 +7,9 @@ module Riews
         {displayed_name => route_path}
       end.inject(:merge)
     end
+
+    def http_verbs
+      Riews::ActionLink.http_verbs.values.map(&:values).map(&:reverse).to_h
+    end
   end
 end

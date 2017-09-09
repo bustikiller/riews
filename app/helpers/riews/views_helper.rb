@@ -88,7 +88,10 @@ module Riews
       links = column.action_links.map do |action_link|
         link_name = sanitize(Riews::ColumnPattern.new(action_link.display_pattern).format(original_row))
         link_target = sanitize(action_link.base_path_with_replacements(original_row))
-        link_to link_name, link_target
+
+        extra_options = {}
+        extra_options = {method: :delete, data: {confirm: 'Are you sure?'}} if action_link.delete_link?
+        link_to link_name, link_target, extra_options
       end
       safe_join links
     end
