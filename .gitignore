@@ -58,3 +58,5 @@ bower.json
 
 # Built gems
 *.gem
+
+Gemfile.lock
