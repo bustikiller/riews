@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
   s.test_files = Dir["spec/**/*"]
 
   s.add_dependency "rails", ">= 3.0.0"
-  s.add_dependency "kaminari", "~> 1.1.0"
+  s.add_dependency "kaminari", "1.1.1"
   s.add_dependency "cocoon", "~>1.2.10"
   s.add_dependency "dentaku", "~> 3.0.0"
   s.add_dependency "bh", "~>1.3.6"
