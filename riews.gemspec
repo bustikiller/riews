@@ -24,7 +24,7 @@ Gem::Specification.new do |s|
   s.add_dependency "bh", "~>1.3.6"
   s.add_dependency "btgen", "~>0.1.1"
   s.add_dependency "simple_form", "~>3.5.0"
-  s.add_dependency "rails_bootstrap_navbar", "~>2.0.1"
+  s.add_dependency "rails_bootstrap_navbar", "~> 3.0.0"
 
   s.add_development_dependency 'sqlite3'
   s.add_development_dependency 'rspec-rails'
