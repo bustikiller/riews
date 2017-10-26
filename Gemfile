@@ -8,7 +8,7 @@ gem 'jquery-ui-rails'
 gem 'bootstrap-sass'
 gem 'rails_bootstrap_navbar'
 gem 'kaminari'
-gem 'cocoon', '~>1.2.10'
+gem 'cocoon', '1.2.11'
 gem 'dentaku'
 gem 'bh'
 
