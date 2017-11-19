@@ -30,7 +30,7 @@ module Riews
     end
 
     def riews_table_with_code(code)
-      riews_table(View.find_or_create_by code: code)
+      riews_table(View.find_or_create_by code: code, name: code)
     end
 
     def riews_table(view, page=1)
