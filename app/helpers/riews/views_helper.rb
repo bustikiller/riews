@@ -18,10 +18,10 @@ module Riews
     end
 
     def generate_helper_buttons_for(view)
-      [
-          link_to('Edit', riews.edit_view_path(view)),
-          link_to('All views', riews.views_path),
-      ].inject{|sum, link| sum +' | ' + link }
+      buttons = []
+      buttons << link_to('Edit', riews.edit_view_path(view)) if can? :edit, view
+      buttons << link_to('All views', riews.views_path) if can? :list, View
+      buttons.inject{|sum, link| sum +' | ' + link }
     end
 
     def generate_raw_sql_for(view, page=1)
