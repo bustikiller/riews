@@ -25,6 +25,7 @@ module Riews
     end
 
     def generate_raw_sql_for(view, page=1)
+      return unless can? :debug, view
       sql_statement = get_affected_models(view, page).select(*view.queried_column_db_identifiers).to_sql
       content_tag :code, sql_statement, class: 'col-md-12'
     end
