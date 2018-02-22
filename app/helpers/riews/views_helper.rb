@@ -68,6 +68,7 @@ module Riews
       columns_queried = view.columns.with_method
       rows = get_affected_models(view, page).pluck(*view.queried_column_db_identifiers)
       rows.map do |row|
+        row = [row] unless row.is_a?(Array)
         row_with_context = row.each_with_index.map{ |value, i| { columns_queried[i].id => value } }.inject({}, :merge)
         render_single_row(view.columns, row_with_context)
       end
