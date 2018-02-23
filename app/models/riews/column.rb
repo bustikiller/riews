@@ -84,6 +84,10 @@ module Riews
       if purposes.combination(2).any?{ |combination| combination.inject(:&) }
         errors.add(:base, 'A single column can only have a method, a pattern, or links')
       end
+
+      if purposes.none?
+        errors.add(:base, 'A method, a pattern, or links are required to display the column')
+      end
     end
   end
 end

@@ -54,6 +54,11 @@ describe Riews::View, type: :model do
         column.action_links.build base_path: 'path', display_pattern: 'pattern'
         expect(column).to be_valid
       end
+
+      it 'should have at least one role' do
+        column = build :column, view: view
+        expect(column).not_to be_valid
+      end
     end
   end
 
