@@ -4,7 +4,7 @@ describe Riews::ActionLink, type: :model do
   describe 'validates' do
     describe 'arguments' do
       let(:action_link) do
-        action_link = build :action_link, base_path: base_path
+        action_link = build :action_link, base_path: base_path, column: build(:column)
         action_link.save! validate: false
         action_link
       end
