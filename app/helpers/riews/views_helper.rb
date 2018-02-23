@@ -31,7 +31,9 @@ module Riews
     end
 
     def riews_table_with_code(code)
-      riews_table(View.find_or_create_by code: code, name: code)
+      view = View.find_or_create_by code: code
+      view.update name: code if view.name.blank?
+      riews_table(view)
     end
 
     def riews_table(view, page=1)
