@@ -12,8 +12,8 @@ jobs:
            RACK_ENV: test
        - image: circleci/postgres:9.5-alpine
          environment:
-           POSTGRES_USER: raffle_bee
-           POSTGRES_DB: raffle_bee_test
+           POSTGRES_USER: riews
+           POSTGRES_DB: riews_test
            POSTGRES_PASSWORD: ""
     working_directory: ~/repo
 
