@@ -1,5 +1,6 @@
 # Riews
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/0b32792e9781436f8660acda74c5cb8a)](https://app.codacy.com/app/bustikiller/riews?utm_source=github.com&utm_medium=referral&utm_content=bustikiller/riews&utm_campaign=badger)
 [![Build Status](https://semaphoreci.com/api/v1/bustikiller/riews/branches/master/badge.svg)](https://semaphoreci.com/bustikiller/riews)
 [![security](https://hakiri.io/github/bustikiller/riews/master.svg)](https://hakiri.io/github/bustikiller/riews/master)
 [![Coverage Status](https://coveralls.io/repos/github/bustikiller/riews/badge.svg?branch=master)](https://coveralls.io/github/bustikiller/riews?branch=master)
