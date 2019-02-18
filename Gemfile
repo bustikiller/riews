@@ -14,6 +14,6 @@ gem 'bh'
 
 group :development, :test do
   gem 'pry'
-  gem 'shoulda-matchers', git: 'https://github.com/thoughtbot/shoulda-matchers.git', branch: 'rails-5'
+  gem 'shoulda-matchers'
   gem 'coveralls', require: false
 end
