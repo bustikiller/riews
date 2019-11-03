@@ -33,16 +33,15 @@ shared: &shared
         destination: test-results
 
 jobs:
-  "ruby-2.4.9":  
+  "ruby-2.4.9":
     <<: *shared
     docker:
       - image: circleci/ruby:2.4.9-node
-      
-  "ruby-2.5.7":  
+  "ruby-2.5.7":
     <<: *shared
     docker:
       - image: circleci/ruby:2.5.7-node
-  "ruby-2.6.5":  
+  "ruby-2.6.5": 
     <<: *shared
     docker:
       - image: circleci/ruby:2.6.5-node
