@@ -21,9 +21,7 @@ module Riews
     def self.apply_math_operations(raw_value)
       token = /\[\[calc:\((.+?)\)\]\]/
       action = proc{ |match| Dentaku::Calculator.new.evaluate(match) }
-      apply_action_on_token(raw_value, token, action)
-    rescue StandardError
-      '[MATH ERROR]'
+      apply_action_on_token(raw_value, token, action).presence || '[MATH ERROR]'
     end
 
     def self.replace_glyphicons(raw_value)
