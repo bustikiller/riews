@@ -3,58 +3,52 @@
 # Check https://circleci.com/docs/2.0/language-ruby/ for more details
 #
 version: 2
+shared: &shared
+  working_directory: ~/repo
+
+  steps:
+    - checkout
+    - run:
+        name: install dependencies
+        command: |
+          bundle install --jobs=4 --retry=3 --path vendor/bundle
+    - run:
+        name: setup database
+        command: |
+          bundle exec rake db:create db:schema:load
+    - run:
+        name: run tests
+        command: |
+          mkdir -p /tmp/test-results
+          TEST_FILES="$(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)"
+          bundle exec rspec --format documentation \
+                            --format RspecJunitFormatter \
+                            --out /tmp/test-results/rspec.xml \
+                            -- $(echo "${TEST_FILES}" | sed -e 's/\n/\\n/' -e 's/ /\ /')
+    # collect reports
+    - store_test_results:
+        path: /tmp/test-results
+    - store_artifacts:
+        path: /tmp/test-results
+        destination: test-results
+
 jobs:
-  build:
+  "ruby-2.4.9":
+    <<: *shared
     docker:
-       - image: circleci/ruby:2.4.2-node-browsers
-         environment:
-           RAILS_ENV: test
-           RACK_ENV: test
-       - image: circleci/postgres:9.5-alpine
-         environment:
-           POSTGRES_USER: riews
-           POSTGRES_DB: riews_test
-           POSTGRES_PASSWORD: ""
-    working_directory: ~/repo
-
-    steps:
-      - checkout
-
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "Gemfile.lock" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
-
-      - run:
-          name: install dependencies
-          command: |
-            bundle install --jobs=4 --retry=3 --path vendor/bundle
-
-      - save_cache:
-          paths:
-            - ./vendor/bundle
-          key: v1-dependencies-{{ checksum "Gemfile.lock" }}
-
-      # Database setup
-      - run: bundle exec rake db:create
-      - run: bundle exec rake db:schema:load
-
-      # run tests!
-      - run:
-          name: run tests
-          command: |
-            mkdir -p /tmp/test-results
-            TEST_FILES="$(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)"
-            bundle exec rspec --format documentation \
-                              --format RspecJunitFormatter \
-                              --out /tmp/test-results/rspec.xml \
-                              -- $(echo "${TEST_FILES}" | sed -e 's/\n/\\n/' -e 's/ /\ /')
-
-      # collect reports
-      - store_test_results:
-          path: /tmp/test-results
-      - store_artifacts:
-          path: /tmp/test-results
-          destination: test-results
+      - image: circleci/ruby:2.4.9-node
+  "ruby-2.5.7":
+    <<: *shared
+    docker:
+      - image: circleci/ruby:2.5.7-node
+  "ruby-2.6.5":
+    <<: *shared
+    docker:
+      - image: circleci/ruby:2.6.5-node
+workflows:
+  version: 2
+  build:
+    jobs:
+      - "ruby-2.4.9"
+      - "ruby-2.5.7"
+      - "ruby-2.6.5"
