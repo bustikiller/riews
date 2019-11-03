@@ -11,7 +11,7 @@ shared: &shared
     - run:
         name: install dependencies
         command: |
-          bundle install --jobs=4 --retry=3 --path vendor/bundle
+          bundle install --gemfile spec/dummy/Gemfile-rails-4 --jobs=4 --retry=3 --path vendor/bundle
     - run:
         name: setup database
         command: |
