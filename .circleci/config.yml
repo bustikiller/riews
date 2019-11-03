@@ -37,18 +37,15 @@ jobs:
     <<: *shared
     docker:
       - image: circleci/ruby:2.4.5-node
-      - image: circleci/postgres:9.5-alpine
       
   "ruby-2.5.3":  
     <<: *shared
     docker:
       - image: circleci/ruby:2.5.3-node
-      - image: circleci/postgres:9.5-alpine
   "ruby-2.6.0":  
     <<: *shared
     docker:
       - image: circleci/ruby:2.6.0-node
-      - image: circleci/postgres:9.5-alpine
 workflows:
   version: 2
   build:
